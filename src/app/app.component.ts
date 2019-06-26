@@ -7,10 +7,10 @@ import { Euphony } from './euphony/Euphony.js';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public app: Euphony;
+  // public app: Euphony;
 
   constructor() {
-    this.app = new Euphony();
-    this.app.initScene();
+    // this.app = new Euphony();
+    // this.app.initScene();
   }
 }
