@@ -19767,8 +19767,8 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
     PianoKeyboardDesign.prototype.noteDropPosZ4BlackKey = .75;
     PianoKeyboardDesign.prototype.whiteKeyColor = 16777215;
     PianoKeyboardDesign.prototype.blackKeyColor = 1118481;
-    PianoKeyboardDesign.prototype.keyDip = -.35;
-    PianoKeyboardDesign.prototype.keyUpSpeed = -.03;
+    PianoKeyboardDesign.prototype.keyDip = .08;
+    PianoKeyboardDesign.prototype.keyUpSpeed = .03;
     PianoKeyboardDesign.prototype.keyInfo = [];
     PianoKeyboardDesign.prototype.noteToColor = function () {
       var map, offset;
@@ -19901,17 +19901,11 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
       this.model = new THREE.Mesh(geometry, material);
       this.model.position.copy(position);
       this.keyUpSpeed = keyUpSpeed;
-      this.originalX = this.model.rotation.x;
-      this.pressedX = this.originalX - keyDip;
-
-      this.rotationPoint = new THREE.Vector3(0, 0, 0);
-      this.rotationAxis = new THREE.Vector3(1, 0, 0);
-      this.rotationX = this.model.rotation.x;
+      this.originalY = position.y;
+      this.pressedY = this.originalY - keyDip
     }
     PianoKey.prototype.press = function () {
-      this.rotationX = this.pressedX;
-      this.model.rotation.x = this.rotationX;
-      // this.model.rotateAroundWorldAxis(this.rotationPoint, this.rotationAxis, this.rotationX);
+      this.model.position.y = this.pressedY;
       return this.isPressed = true
     };
     PianoKey.prototype.release = function () {
@@ -19919,12 +19913,9 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
     };
     PianoKey.prototype.update = function () {
       var offset;
-      if (this.rotationX > this.originalX && !this.isPressed) {
-        offset = this.originalX - this.rotationX;
-        this.rotationX += Math.max(offset, this.keyUpSpeed);
-        this.model.rotation.x = this.rotationX;
-        // this.model.rotateAroundWorldAxis(this.rotationPoint, this.rotationAxis, this.rotationX);
-        return this.rotationX;
+      if (this.model.position.y < this.originalY && !this.isPressed) {
+        offset = this.originalY - this.model.position.y;
+        return this.model.position.y += Math.min(offset, this.keyUpSpeed)
       }
     };
     return PianoKey
@@ -20734,27 +20725,3 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
   }();
   this.Euphony = Euphony
 }).call(this);
-
-THREE.Object3D.prototype.rotateAroundWorldAxis = function () {
-
-  // rotate object around axis in world space (the axis passes through point)
-  // axis is assumed to be normalized
-  // assumes object does not have a rotated parent
-
-  var q = new THREE.Quaternion();
-
-  return function rotateAroundWorldAxis(point, axis, angle) {
-
-    q.setFromAxisAngle(axis, angle);
-
-    this.quaternion.multiplyQuaternions(q1, this.quaternion);
-
-    this.position.sub(point);
-    this.position.applyQuaternion(q);
-    this.position.add(point);
-
-    return this;
-
-  }
-
-}();
