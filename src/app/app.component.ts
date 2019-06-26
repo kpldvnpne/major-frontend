@@ -23,14 +23,13 @@ export class AppComponent implements OnInit {
       this.app.initScene(this.canvasRef.nativeElement);      
     });
 
-    this.http.get('/tracks/199-Tchaikovsky - Arabian Dance (Nutcracker)', {responseType: 'text'})
+    this.http.get('/tracks/042-Brahms - Rhapsody in G Op-79 No-2', {responseType: 'text'})
       .subscribe((midiFile: any) => {
         this.app.loadMidiFile(midiFile, () => {
           setTimeout(() => {
             this.app.start();
-          }, 1000);
+          }, 2000);
         })
-        console.log(midiFile);
       })
     // console.log(global.player);
     // this.app.start();

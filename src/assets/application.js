@@ -20602,6 +20602,18 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
       this.keyboard = new PianoKeyboard(this.design);
       this.rain = new NoteRain(this.design);
       this.particles = new NoteParticles(this.design);
+
+      // ----------- Floor geometry ----------------------
+      this.floor = new THREE.Mesh(
+        new THREE.PlaneGeometry(800, 800), 
+        new THREE.MeshBasicMaterial({color: 0xa0a0a0, side: THREE.DoubleSide }),
+      );
+      console.log(this.floor, this.floor.model);
+      this.floor.rotation.x = -Math.PI / 2;
+      this.floor.position.y = -0.20;
+      this.floor.receiveShadow = true;
+      this.floor.castShadow = true;
+
       this.player = MIDI.Player;
       this.player.addListener(function (data) {
         var NOTE_OFF, NOTE_ON, message, note;
@@ -20636,6 +20648,7 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
       this.scene.add(this.keyboard.model);
       this.scene.add(this.rain.model);
       this.scene.add(this.particles.model);
+      this.scene.add(this.floor);
       return this.scene.animate(function () {
         _this.keyboard.update();
         return _this.particles.update()
