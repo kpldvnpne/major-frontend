@@ -19898,6 +19898,8 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
         });
         position = new THREE.Vector3(keyCenterPosX, 0, 0)
       }
+      // material.shininess = 100.0;
+      // material.specular = new THREE.Color().setRGB(0.25, 0.25, 0.25);
       this.model = new THREE.Mesh(geometry, material);
       this.model.position.copy(position);
       this.keyUpSpeed = keyUpSpeed;
@@ -20200,6 +20202,7 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
       scene.add(ambientLight);
       mainLight = new THREE.DirectionalLight(16777215, .8);
       mainLight.position.set(1, 2, 4).normalize();
+      // mainLight.castShadow = true;
       scene.add(mainLight);
       auxLight = new THREE.DirectionalLight(16777215, .3);
       auxLight.position.set(-4, -1, -2).normalize();
@@ -20606,7 +20609,7 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
       // ----------- Floor geometry ----------------------
       this.floor = new THREE.Mesh(
         new THREE.PlaneGeometry(800, 800), 
-        new THREE.MeshBasicMaterial({color: 0xa0a0a0, side: THREE.DoubleSide }),
+        new THREE.MeshBasicMaterial({color: 0x0000ff, side: THREE.DoubleSide }),
       );
       console.log(this.floor, this.floor.model);
       this.floor.rotation.x = -Math.PI / 2;
@@ -20648,7 +20651,7 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
       this.scene.add(this.keyboard.model);
       this.scene.add(this.rain.model);
       this.scene.add(this.particles.model);
-      this.scene.add(this.floor);
+      // this.scene.add(this.floor);
       return this.scene.animate(function () {
         _this.keyboard.update();
         return _this.particles.update()
