@@ -20178,11 +20178,11 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
     }
   };
   Scene = function () {
-    function Scene(container) {
+    function Scene(canvasEl) {
       this.animate = __bind(this.animate, this);
       this.onresize = __bind(this.onresize, this);
       var $container, ambientLight, auxLight, camera, controls, height, mainLight, renderer, scene, width;
-      $container = $(container);
+      $container = $(canvasEl);
       width = $container.width();
       height = $container.height();
       scene = new THREE.Scene;
@@ -20630,9 +20630,9 @@ THREE.OrbitControls.prototype = Object.create(THREE.EventDispatcher.prototype);
         }
       })
     }
-    Euphony.prototype.initScene = function () {
+    Euphony.prototype.initScene = function (canvasEl) {
       var _this = this;
-      this.scene = new Scene("#canvas");
+      this.scene = new Scene(canvasEl);
       this.scene.add(this.keyboard.model);
       this.scene.add(this.rain.model);
       this.scene.add(this.particles.model);
