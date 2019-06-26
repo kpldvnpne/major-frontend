@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Euphony } from './euphony/Euphony.js';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +6,13 @@ import { Euphony } from './euphony/Euphony.js';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // public app: Euphony;
+  public app: any;
 
   constructor() {
+    let global: any = window;
+    this.app = new global.Euphony();
+    this.app.initScene();
+
     // this.app = new Euphony();
     // this.app.initScene();
   }

@@ -21,7 +21,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/soundfont"
+              "src/soundfont",
+              "src/tracks"
             ],
             "styles": [
               "src/styles.css"
