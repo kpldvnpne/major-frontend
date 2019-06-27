@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 
 import { API_BASE_URL } from './constants';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,11 @@ export class AppComponent implements OnInit {
   public musicFiles = ['firstmidi', 'secondmidi'];
   public instruments = ['guitar', 'piano'];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private appService: AppService) {
+    this.appService.getMidiFiles()
+      .subscribe((midiFiles: string[]) => {
+        this.musicFiles = midiFiles;
+      });
   }
 
   ngOnInit() {
