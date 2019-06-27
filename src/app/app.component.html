@@ -1,68 +1,67 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
 <mat-sidenav-container>
-    <mat-sidenav #sidenav mode=side [(opened)]= "opened" >
+  <mat-sidenav #sidenav mode=side [(opened)]="opened">
+    <div>
+      <mat-icon mat-list-icon style="height:100%; position:relative; top:45%; left:20%;" (click)="sidenav.toggle()">
+        <img src="../assets/icons/logo6.png" style="height:5rem; " />
+      </mat-icon>
+    </div>
+    <div>
       <div>
-        <mat-icon mat-list-icon style="height:100%; position:relative; top:45%; left:20%;" (click)="sidenav.toggle()">
-            <img src="../assets/icons/logo6.png"
-              style="height:5rem; "/>
-          </mat-icon>
-        </div>
-        <div>
-          <h4>MUSIC</h4>
-                <mat-form-field>
-                  <mat-label>Music</mat-label>
-                  <mat-select>
-                    <mat-option *ngFor="let music of music" [value]="Music.value">
-                      {{Music.viewValue}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-          </div>
-          <div>
-            <h4>MODEL</h4>
-            <mat-form-field>
-              <mat-label>Model</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let food of foods" [value]="food.value">
-                  {{food.viewValue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-              </div> 
-              <div>
-                <h4>INSTRUMENT</h4>
-                <mat-form-field>
-                  <mat-label>Instrument</mat-label>
-                  <mat-select>
-                    <mat-option *ngFor="let food of foods" [value]="food.value">
-                      {{food.viewValue}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-          </div>
-      
-    </mat-sidenav>
-  
-    <mat-sidenav-content>
-  
-        <mat-toolbar class="matbar" color="accent">
-  
-          <button mat-button (click)="sidenav.toggle()">
-              <mat-icon>menu</mat-icon>
-          </button>
-          <span class= spacer>AIM (AI in Music generation)</span>
-          <span>About</span>
-          <span>Contact us</span>
-          
-        </mat-toolbar>
-  
-        <div #canvas id="canvas"></div>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
+        <h4>MODEL</h4>
+        <mat-form-field>
+          <mat-label>Model</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{food.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <h4>MUSIC</h4>
+      <mat-form-field>
+        <mat-label>Music</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let music of music" [value]="Music.value">
+            {{Music.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <h4>INSTRUMENT</h4>
+      <mat-form-field>
+        <mat-label>Instrument</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let food of foods" [value]="food.value">
+            {{food.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <mat-toolbar class="matbar" color="accent">
+
+      <button mat-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class=spacer>AIM (AI in Music generation)</span>
+      <span>About</span>
+      <span>Contact us</span>
+
+    </mat-toolbar>
+
+    <div #canvas id="canvas"></div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 
 
-  
-  </mat-sidenav-container>
+
+
+
+</mat-sidenav-container>
