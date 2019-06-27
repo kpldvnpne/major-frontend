@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { LoadedRouterConfig } from '@angular/router/src/config';
-import { PlayerIndex } from '@angular/core/src/render3/interfaces/player';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
+
+import { API_BASE_URL } from './constants';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit {
       this.app.initScene(this.canvasRef.nativeElement);      
     });
 
-    this.http.get('/tracks/042-Brahms - Rhapsody in G Op-79 No-2', {responseType: 'text'})
+    const path = Location.joinWithSlash(API_BASE_URL, '/tracks/042-Brahms - Rhapsody in G Op-79 No-2');
+    this.http.get(path, {responseType: 'text'})
       .subscribe((midiFile: any) => {
         this.app.loadMidiFile(midiFile, () => {
           setTimeout(() => {
