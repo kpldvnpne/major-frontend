@@ -32,8 +32,7 @@ export class AppComponent implements OnInit {
       this.app.initScene(this.canvasRef.nativeElement);      
     });
 
-    const path = Location.joinWithSlash(API_BASE_URL, '/tracks/042-Brahms - Rhapsody in G Op-79 No-2');
-    this.http.get(path, {responseType: 'text'})
+    this.appService.getMidiFile('firstMidi')
       .subscribe((midiFile: any) => {
         this.app.loadMidiFile(midiFile, () => {
           setTimeout(() => {

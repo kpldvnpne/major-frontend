@@ -16,5 +16,10 @@ export class AppService {
     return this.http.get(path);
   };
 
+  public getMidiFile(filename: string): any {
+    const path = Location.joinWithSlash(API_BASE_URL, `/tracks/${filename}`);
+    return this.http.get(path, { responseType: 'text' });
+  }
+
 
 }
