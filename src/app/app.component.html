@@ -13,8 +13,8 @@
         <mat-form-field>
           <mat-label>Model</mat-label>
           <mat-select>
-            <mat-option *ngFor="let food of foods" [value]="food.value">
-              {{food.viewValue}}
+            <mat-option *ngFor="let model of models" [value]="model">
+              {{model}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -23,8 +23,8 @@
       <mat-form-field>
         <mat-label>Music</mat-label>
         <mat-select>
-          <mat-option *ngFor="let music of music" [value]="Music.value">
-            {{Music.viewValue}}
+          <mat-option *ngFor="let musicFile of musicFiles" [value]="musicFile">
+            {{musicFile}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -34,8 +34,8 @@
       <mat-form-field>
         <mat-label>Instrument</mat-label>
         <mat-select>
-          <mat-option *ngFor="let food of foods" [value]="food.value">
-            {{food.viewValue}}
+          <mat-option *ngFor="let instrument of instruments" [value]="instrument">
+            {{instrument}}
           </mat-option>
         </mat-select>
       </mat-form-field>
