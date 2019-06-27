@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
-<mat-sidenav-container>
-  <mat-sidenav #sidenav mode=side [(opened)]="opened">
+<mat-sidenav-container [hasBackdrop]=false>
+  <mat-sidenav #sidenav mode=push  [(opened)]="opened">
     <div>
       <mat-icon mat-list-icon style="height:100%; position:relative; top:45%; left:20%;" (click)="sidenav.toggle()">
         <img src="../assets/icons/logo6.png" style="height:5rem; " />
@@ -40,6 +40,8 @@
         </mat-select>
       </mat-form-field>
     </div>
+    <button mat-button mat-flat-button color="primary" class="play-control-btn">Play</button>
+    <button mat-button mat-flat-button color="primary" class="play-control-btn">Pause</button>
 
   </mat-sidenav>
 

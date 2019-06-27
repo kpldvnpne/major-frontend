@@ -27,6 +27,10 @@ mat-sidenav{
   flex: 1 1 auto;
 }
 
+.play-control-btn {
+  margin-right: 5px;
+}
+
 .matbar {
   height: 3rem;
   position: sticky;
