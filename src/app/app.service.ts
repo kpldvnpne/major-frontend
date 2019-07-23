@@ -17,7 +17,7 @@ export class AppService {
   };
 
   public getMidiFile(filename: string): any {
-    const path = Location.joinWithSlash(API_BASE_URL, `/tracks/${filename}`);
+    const path = Location.joinWithSlash(API_BASE_URL, `/api/midi/file/${filename}`);
     return this.http.get(path, { responseType: 'text' });
   }
 

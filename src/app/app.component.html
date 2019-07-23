@@ -22,7 +22,7 @@
       <h4>MUSIC</h4>
       <mat-form-field>
         <mat-label>Music</mat-label>
-        <mat-select>
+        <mat-select (selectionChange)="midiFileChange($event)">
           <mat-option *ngFor="let musicFile of musicFiles" [value]="musicFile">
             {{musicFile}}
           </mat-option>
@@ -40,8 +40,8 @@
         </mat-select>
       </mat-form-field>
     </div> -->
-    <button mat-button mat-flat-button color="primary" class="play-control-btn">Play</button>
-    <button mat-button mat-flat-button color="primary" class="play-control-btn">Pause</button>
+    <!-- <button mat-button mat-flat-button color="primary" class="play-control-btn">Play</button>
+    <button mat-button mat-flat-button color="primary" class="play-control-btn">Pause</button> -->
 
   </mat-sidenav>
 
@@ -61,9 +61,5 @@
     <div #canvas id="canvas"></div>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
-
-
-
-
 
 </mat-sidenav-container>

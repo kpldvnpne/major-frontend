@@ -32,18 +32,27 @@ export class AppComponent implements OnInit {
       this.app.initScene(this.canvasRef.nativeElement);      
     });
 
-    this.appService.getMidiFile('firstMidi')
+    
+    // console.log(global.player);
+    // this.app.start();
+    // this.app.loadMidiFile(midiFile, function() {
+    //   global.player.play();
+    // }
+  }
+
+  midiFileChange(event: any) {
+    this.changeMidiFile(event.value);
+  }
+
+  private changeMidiFile(filename: string) {
+    this.appService.getMidiFile(filename)
       .subscribe((midiFile: any) => {
+        console.log(midiFile);
         this.app.loadMidiFile(midiFile, () => {
           setTimeout(() => {
             this.app.start();
           }, 2000);
         })
       })
-    // console.log(global.player);
-    // this.app.start();
-    // this.app.loadMidiFile(midiFile, function() {
-    //   global.player.play();
-    // }
   }
 }
