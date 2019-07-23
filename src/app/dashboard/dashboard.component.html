@@ -1,0 +1,63 @@
+<mat-sidenav-container [hasBackdrop]=false>
+  <mat-sidenav #sidenav mode=push [(opened)]="opened">
+    <div>
+      <mat-icon mat-list-icon style="height:100%; position:relative; top:45%; left:20%;" (click)="sidenav.toggle()">
+        <img src="../assets/icons/logo6.png" style="height:5rem; " />
+      </mat-icon>
+    </div>
+    <div>
+      <!-- <div>
+        <h4>MODEL</h4>
+        <mat-form-field>
+          <mat-label>Model</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let model of models" [value]="model">
+              {{model}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div> -->
+      <h4>MUSIC</h4>
+      <mat-form-field>
+        <mat-label>Music</mat-label>
+        <mat-select (selectionChange)="midiFileChange($event)">
+          <mat-option *ngFor="let musicFile of musicFiles" [value]="musicFile">
+            {{musicFile}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- <div>
+      <h4>INSTRUMENT</h4>
+      <mat-form-field>
+        <mat-label>Instrument</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let instrument of instruments" [value]="instrument">
+            {{instrument}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div> -->
+    <!-- <button mat-button mat-flat-button color="primary" class="play-control-btn">Play</button>
+    <button mat-button mat-flat-button color="primary" class="play-control-btn">Pause</button> -->
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <mat-toolbar class="matbar" color="accent">
+
+      <button mat-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class=spacer>AIM (AI in Music generation)</span>
+      <span>About</span>
+      <span>Contact us</span>
+
+    </mat-toolbar>
+
+    <div #canvas id="canvas"></div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

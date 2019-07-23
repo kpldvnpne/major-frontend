@@ -11,13 +11,10 @@ import { AppService } from './app.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  @ViewChild('canvas') canvasRef: ElementRef;
 
-  public app: any;
-  public models = ['RNN/LSTM', 'PI'];
-  public musicFiles = ['firstmidi', 'secondmidi'];
-  public instruments = ['guitar', 'piano'];
+  constructor(){
 
+<<<<<<< HEAD
   constructor(private http: HttpClient, private appService: AppService) {
     this.appService.getMidiFiles()
       .subscribe((midiFiles: string[]) => {
@@ -54,5 +51,11 @@ export class AppComponent implements OnInit {
           }, 2000);
         })
       })
+=======
+  }
+
+  ngOnInit() {
+    
+>>>>>>> 38290021e5bb7bda1f916306f79fe3e7c6cdd20e
   }
 }
