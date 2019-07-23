@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { API_BASE_URL } from '../constants';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,11 @@ export class DashboardComponent implements OnInit {
   public musicFiles = ['firstmidi', 'secondmidi'];
   public instruments = ['guitar', 'piano'];
 
-  constructor(private http: HttpClient) {
+  constructor(private appService: AppService, private http: HttpClient) {
+    this.appService.getMidiFiles()
+      .subscribe((midiFiles: string[]) => {
+        this.musicFiles = midiFiles;
+      });
   }
 
   ngOnInit() {
@@ -28,19 +33,27 @@ export class DashboardComponent implements OnInit {
       this.app.initScene(this.canvasRef.nativeElement);      
     });
 
-    const path = Location.joinWithSlash(API_BASE_URL, '/tracks/042-Brahms - Rhapsody in G Op-79 No-2');
-    this.http.get(path, {responseType: 'text'})
-      .subscribe((midiFile: any) => {
-        this.app.loadMidiFile(midiFile, () => {
-          setTimeout(() => {
-            this.app.start();
-          }, 2000);
-        })
-      })
+    
     // console.log(global.player);
     // this.app.start();
     // this.app.loadMidiFile(midiFile, function() {
     //   global.player.play();
     // }
+  }
+
+  midiFileChange(event: any) {
+    this.changeMidiFile(event.value);
+  }
+
+  private changeMidiFile(filename: string) {
+    this.appService.getMidiFile(filename)
+      .subscribe((midiFile: any) => {
+        console.log(midiFile);
+        this.app.loadMidiFile(midiFile, () => {
+          setTimeout(() => {
+            this.app.start();
+          }, 2000);
+        })
+      });
   }
 }
