@@ -110,7 +110,6 @@ export class DashboardComponent implements OnInit {
       }, 1000);
     
       this.channelsInstruments = this.getChannelsInstruments();
-      this.channelsInstrumentsList = this.parseChannelsInstruments();
       
       for (let channel in this.channelsInstruments) {
         if (this.channelsInstruments.hasOwnProperty(channel)) {
@@ -124,8 +123,10 @@ export class DashboardComponent implements OnInit {
           this.MIDI.programChange(channel, respectiveChannel);
         }
       }
+      
+      this.channelsInstrumentsList = this.parseChannelsInstruments();
     });
-
+    
     // this.appService.getMidiFile(filename)
     //   .subscribe((midiFile: any) => {
     //     // console.log(midiFile);
