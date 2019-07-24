@@ -114,7 +114,7 @@ midi.loadMidiFile = function(onsuccess, onprogress, onerror) {
 		midi.endTime = getLength();
 		///
 		MIDI.loadPlugin({
-// 			instruments: midi.getFileInstruments(),
+			// instruments: midi.getFileInstruments(),
 			onsuccess: onsuccess,
 			onprogress: onprogress,
 			onerror: onerror

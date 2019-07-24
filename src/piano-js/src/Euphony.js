@@ -62,7 +62,7 @@ class Euphony {
   initMidi(callback) {
     let instruments = [
       "acoustic_grand_piano", 
-      "acoustic_guitar_nylon", 
+      // "acoustic_guitar_nylon", 
       // "acoustic_guitar_steel", 
       // "alto_sax", "baritone_sax", 
       // "brass_section",
