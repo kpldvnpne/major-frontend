@@ -41,7 +41,7 @@ class Scene {
     auxLight.position.set(-4, -1, -2).normalize();
     scene.add(auxLight);
 
-    const controls = new THREE.OrbitControls(camera);
+    const controls = new THREE.OrbitControls(camera, container);
     controls.center.set(8.73, 0, 0);
     controls.autoRotateSpeed = 1.0;
     controls.autoRotate = false;
