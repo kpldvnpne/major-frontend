@@ -48,7 +48,6 @@ class PianoKeyboardDesign {
     this.prototype.noteToColor = (function() {
       const map = MusicTheory.Synesthesia.map('August Aeppli (1940)');
       // const offset = MIDI.pianoKeyOffset;
-      console.log(map);
       return function(note) {
         // if (map[note - offset] == null) { return 0x000000; }
         if (map[note] == null) { return 0x000000; }

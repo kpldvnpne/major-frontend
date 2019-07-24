@@ -30,7 +30,8 @@ export class DashboardComponent implements OnInit {
     let global: any = window;
     this.app = new global.Euphony();
     this.app.initMidi(() => {
-      this.app.initScene(this.canvasRef.nativeElement);      
+      this.app.initScene(this.canvasRef.nativeElement);
+      global.MIDI.programChange(1, 24);
     });
 
     
@@ -46,14 +47,19 @@ export class DashboardComponent implements OnInit {
   }
 
   private changeMidiFile(filename: string) {
-    this.appService.getMidiFile(filename)
-      .subscribe((midiFile: any) => {
-        console.log(midiFile);
-        this.app.loadMidiFile(midiFile, () => {
-          setTimeout(() => {
-            this.app.start();
-          }, 2000);
-        })
-      });
+    this.app.loadMidiFile(API_BASE_URL + "api/midi/file/" + filename, () => {
+      setTimeout(() => {
+        this.app.start();
+      }, 1000);
+    })
+    // this.appService.getMidiFile(filename)
+    //   .subscribe((midiFile: any) => {
+    //     // console.log(midiFile);
+    //     this.app.loadMidiFile(midiFile, () => {
+    //       setTimeout(() => {
+    //         this.app.start();
+    //       }, 2000);
+    //     })
+    //   });
   }
 }
