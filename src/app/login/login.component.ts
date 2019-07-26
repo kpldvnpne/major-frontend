@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-    this.router.navigateByUrl('/login?username=kuldip&password=boss');
+    this.router.navigateByUrl('/dashboard');
   }
 
   ngOnInit() {
