@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { API_BASE_URL } from '../constants';
 import { AppService } from '../app.service';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -60,7 +62,12 @@ export class DashboardComponent implements OnInit {
 
   private MIDI: any = (window as any).MIDI;
 
-  constructor(private appService: AppService, private http: HttpClient) {
+  constructor(
+    private appService: AppService, 
+    private http: HttpClient, 
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.appService.getMidiFiles()
       .subscribe((midiFiles: string[]) => {
         this.musicFiles = midiFiles;
@@ -68,6 +75,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(!this.authService.isLoggedIn) {
+      this.router.navigateByUrl('/login');
+    }
+
     let global: any = window;
     this.app = new global.Euphony();
     this.app.initMidi(() => {
