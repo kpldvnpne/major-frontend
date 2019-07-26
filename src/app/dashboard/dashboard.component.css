@@ -64,5 +64,11 @@ mat-select{
 } */
 
 .logout{
-  color: primary;
+  margin-right: 200px;
+  border: none;
+  padding: 10px;
+  color: #7289DA;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 3px 3px 10px 1px grey;
 }
