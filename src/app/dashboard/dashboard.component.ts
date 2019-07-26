@@ -6,6 +6,7 @@ import { AppService } from '../app.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -94,6 +95,11 @@ export class DashboardComponent implements OnInit {
     // }
   }
 
+  public onClick() {
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
+  }
+
   public midiFileChange(event: any) {
     this.changeMidiFile(event.value);
   }
@@ -176,5 +182,6 @@ export class DashboardComponent implements OnInit {
     }
 
     return channels;
+    
   }
 }
