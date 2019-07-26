@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { API_BASE_URL } from '../constants';
 import { AppService } from '../app.service';
+import {Router,ActivatedRoute} from '@angular/router';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +14,10 @@ import { AppService } from '../app.service';
 export class DashboardComponent implements OnInit {
 
   @ViewChild('canvas') canvasRef: ElementRef;
+
+  onClick(){
+    this.router.navigateByUrl('/login');
+  }
 
   public opened = true;
   public instruments = {
@@ -60,7 +66,7 @@ export class DashboardComponent implements OnInit {
 
   private MIDI: any = (window as any).MIDI;
 
-  constructor(private appService: AppService, private http: HttpClient) {
+  constructor(private appService: AppService, private http: HttpClient, private router: Router) {
     this.appService.getMidiFiles()
       .subscribe((midiFiles: string[]) => {
         this.musicFiles = midiFiles;
@@ -165,5 +171,6 @@ export class DashboardComponent implements OnInit {
     }
 
     return channels;
+    
   }
 }

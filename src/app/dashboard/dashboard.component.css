@@ -62,3 +62,7 @@ mat-option{
 mat-select{
   color:#ffffff !important;
 } */
+
+.logout{
+  color: primary;
+}
