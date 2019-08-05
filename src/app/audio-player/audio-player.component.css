@@ -5,6 +5,11 @@
   align-items: center;
 }
 
+#playing-time, #remaining-time {
+  color: grey;
+  font-size: 13px;
+}
+
 #play-pause {
   box-sizing: border-box;
   height: 50px;
