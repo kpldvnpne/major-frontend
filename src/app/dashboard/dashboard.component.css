@@ -16,11 +16,11 @@ mat-sidenav-container {
 
 mat-sidenav {
     padding: 1rem;
-    /* color: #FFFFFF; */
-    /* color:white; */
-    /* background-color: #3b3b3b !important; */
+    /* color: #FFFFFF;
+    color:white;
+    background-color: #3b3b3b !important; */
     box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
-    width: 220px;
+    width: 250px;
   }
 
 .spacer {
@@ -64,11 +64,36 @@ mat-select{
 } */
 
 .logout{
-  margin-right: 200px;
+  margin-right: 220px;
   border: none;
   padding: 10px;
   color: #7289DA;
   background-color: white;
   border-radius: 5px;
   box-shadow: 3px 3px 10px 1px grey;
+}
+
+
+.slider-container{
+  width:100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+
+.left{
+  float: left;
+  width: 50%;
+  overflow: hidden;
+}
+
+.right{
+  overflow: hidden;
+  padding-right: 30px;
+}
+
+mat-slider{
+  align-items:center;
 }
