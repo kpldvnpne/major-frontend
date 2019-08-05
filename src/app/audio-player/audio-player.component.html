@@ -11,10 +11,10 @@
   <button id="forward" (click)="fastForward()">
     <mat-icon>fast_forward</mat-icon>
   </button>
-  <div id="slider">
+  <div id="slider" (click)="handleSeek($event)">
     <div id="slider-active" [ngStyle]="{ width: timePosition / totalTime * 100 + '%'}"></div>
-    <div id="slider-background"></div>
-    <div id="cursor" [ngStyle]="{ left: timePosition / totalTime * 100 + '%'}"></div>
+    <div #sliderBackground id="slider-background"></div>
+    <div id="cursor" [ngStyle]="{ left: timePosition / totalTime * 100 + '%'}" (mousedown)="handleCursorMouseDown($event)"></div>
   </div>
   <span id="remaining-time">-{{ convertIntoTimeFormat(totalTime - timePosition) }}</span>
 </div>

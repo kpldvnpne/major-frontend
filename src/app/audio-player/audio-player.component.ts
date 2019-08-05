@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -12,6 +12,8 @@ export class AudioPlayerComponent implements OnInit {
   @Input() skipInterval: number = 10;
   public timePosition: number = 0;
   public isPlaying: boolean = false;
+
+  @ViewChild('sliderBackground') sliderDivRef: ElementRef;
 
   private timer: NodeJS.Timer;
     
@@ -54,12 +56,40 @@ export class AudioPlayerComponent implements OnInit {
     this.timePosition -= this.skipInterval;
   }
 
+  public seek(newTimePosition: number): void {
+    this.timePosition = newTimePosition;
+  }
+
   public playPauseClick() {
     if (this.isPlaying) {
       this.pause();
     } else {
       this.resume();
     }
+  }
+
+  public handleSeek(event: MouseEvent): void {
+    const sliderDivRef: HTMLDivElement = this.sliderDivRef.nativeElement;
+    const seekPosition = event.offsetX / sliderDivRef.offsetWidth;
+    this.timePosition = seekPosition * this.totalTime;
+  }
+
+  public handleCursorMouseDown(event: MouseEvent): void {
+    const sliderDivRef: HTMLDivElement = this.sliderDivRef.nativeElement;
+
+    const windowMouseMoveListener = (event: MouseEvent) => {
+      const relativeMousePosition = event.pageX - sliderDivRef.getBoundingClientRect().left;
+      const seekPosition = Math.min(Math.max(relativeMousePosition / sliderDivRef.offsetWidth, 0), 1);
+      console.log(seekPosition);
+      this.timePosition = seekPosition * this.totalTime;
+    };
+    window.addEventListener('mousemove', windowMouseMoveListener);
+
+    const windowMouseUpListener = (event: MouseEvent) => {
+      window.removeEventListener('mousemove', windowMouseMoveListener);
+      window.removeEventListener('mouseup', windowMouseUpListener);
+    };
+    window.addEventListener('mouseup', windowMouseUpListener);
   }
 
   public convertIntoTimeFormat(timeInSeconds: number) {

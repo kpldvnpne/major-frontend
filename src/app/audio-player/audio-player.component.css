@@ -37,6 +37,7 @@
   position: absolute;
   height: 100%;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 #slider-background {
@@ -61,6 +62,7 @@
   left: 0;
   transform: translate(-50%, -50%);
   transition: opacity 0.1s ease-in-out;
+  cursor: pointer;
 }
 
 #slider:hover #cursor {
