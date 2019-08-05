@@ -12,9 +12,9 @@
     <mat-icon>fast_forward</mat-icon>
   </button>
   <div id="slider">
-    <div id="slider-active"></div>
+    <div id="slider-active" [ngStyle]="{ width: timePosition / totalTime * 100 + '%'}"></div>
     <div id="slider-background"></div>
-    <span id="cursor"></span>
+    <div id="cursor" [ngStyle]="{ left: timePosition / totalTime * 100 + '%'}"></div>
   </div>
   <span id="remaining-time">-{{ convertIntoTimeFormat(totalTime - timePosition) }}</span>
 </div>

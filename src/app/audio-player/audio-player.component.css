@@ -45,5 +45,24 @@
 }
 
 #slider-active {
+  z-index: 10;
   background-color: blueviolet;
+}
+
+#cursor {
+  z-index: 20;
+  position: absolute;
+  border-radius: 50%;
+  background: purple;
+  opacity: 0;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.1s ease-in-out;
+}
+
+#slider:hover #cursor {
+  opacity: 0.8;
 }
