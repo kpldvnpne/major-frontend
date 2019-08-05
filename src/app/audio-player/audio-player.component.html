@@ -1,0 +1,20 @@
+<div id="player">
+  <span id="playing-time">{{ convertIntoTimeFormat(timePosition) }}</span>
+  <button id="backward" (click)="fastRewind()">
+    <mat-icon>fast_rewind</mat-icon>
+  </button>
+  <button id="play-pause" [ngClass]="{ 'playing': isPlaying}" (click)="playPauseClick()">
+  </button>
+  <button id="stop" (click)="stop()">
+    <mat-icon>stop</mat-icon>
+  </button>
+  <button id="forward" (click)="fastForward()">
+    <mat-icon>fast_forward</mat-icon>
+  </button>
+  <div id="slider">
+    <div id="slider-active"></div>
+    <div id="slider-background"></div>
+    <span id="cursor"></span>
+  </div>
+  <span id="remaining-time">-{{ convertIntoTimeFormat(totalTime - timePosition) }}</span>
+</div>
