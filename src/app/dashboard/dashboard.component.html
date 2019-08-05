@@ -1,58 +1,106 @@
 <mat-sidenav-container [autosize]="true" [hasBackdrop]=false>
   <mat-sidenav #sidenav mode=side [(opened)]="opened">
-    <div>
-      <mat-icon mat-list-icon style="height:100%; position:relative; top:45%; left:20%;" (click)="sidenav.toggle()">
+    <div class="logo">
+      <mat-icon mat-list-icon class="logo-icon" style="height:100%; position:relative; top:45%; " (click)="sidenav.toggle()">
         <img src="../assets/icons/logo6.png" style="height:5rem; " />
       </mat-icon>
     </div>
-    <div>
-      <!-- <div>
-        <h4>MODEL</h4>
-        <mat-form-field>
-          <mat-label>Model</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let model of models" [value]="model">
-              {{model}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div> -->
-      <h4>MUSIC</h4>
-      <mat-form-field>
-        <mat-label>Music</mat-label>
-        <mat-select (selectionChange)="midiFileChange($event)">
-          <mat-option *ngFor="let musicFile of musicFiles" [value]="musicFile">
-            {{musicFile}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div>
-      <h4>INSTRUMENTS USED</h4>
-      <mat-form-field *ngFor="let channelInstrument of channelsInstrumentsList;">
-        <label>Channel: {{channelInstrument.channel}}</label>
-        <mat-select [value]='channelInstrument.instrument' (selectionChange)="soundFontChange($event, channelInstrument.channel)">
-          <mat-option *ngFor="let instrument of instrumentsList" [value]="instrument">
-            {{instrument}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="slider-container">
-    <div class="left">
-      <h4>Tempo</h4>
-      <mat-slider min="1" max="5" step="0.5" value="1.5" step="1" tickInterval="1" vertical= "true">
-      </mat-slider>
-    </div>
 
-    <div class="right">
-        <h4>Temperature</h4>
-        <mat-slider min="1" max="5" step="0.5" value="1.5" vertical="true">
-        </mat-slider>
-      </div>
-      </div>
-    <!-- <button mat-button mat-flat-button color="primary" class="play-control-btn">Play</button>
-    <button mat-button mat-flat-button color="primary" class="play-control-btn">Pause</button> -->
+    <div class="control-panel">
+      <fieldset class="current-playing">
+        <legend>Current Playing</legend>
+        <div class="current-playing-desc">
+          <div>
+            <h4>SONG</h4>
+            <mat-form-field>
+              <mat-label>Select Song</mat-label>
+              <mat-select (selectionChange)="midiFileChange($event)">
+                <mat-option *ngFor="let musicFile of musicFiles" [value]="musicFile">
+                  {{musicFile}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+            <h4>INSTRUMENTS USED</h4>
+            <mat-form-field *ngFor="let channelInstrument of channelsInstrumentsList;">
+              <label>Channel: {{channelInstrument.channel}}</label>
+              <mat-select [value]='channelInstrument.instrument' (selectionChange)="soundFontChange($event, channelInstrument.channel)">
+                <mat-option *ngFor="let instrument of instrumentsList" [value]="instrument">
+                  {{instrument}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        
+      </fieldset>
+
+      <fieldset>
+        <legend>Generate music</legend>
+        <div class="generate-input-fields">
+          <mat-form-field class="genre-options">
+            <mat-label>Select Genre</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let genre of genreList" [value]="genre">
+                {{genre | uppercase}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="instrument-options">
+            <mat-label>Select Instrument</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let instrument of instrumentList" [value]="instrument">
+                {{instrument | uppercase}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="key-options">
+            <mat-label>Select Key</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let key of keyList" [value]="key">
+                {{key | uppercase}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="number-of-bars">
+            <input matInput placeholder="Number of bars" value="64" type="number" />
+          </mat-form-field>
+          <mat-form-field class="bpm">
+            <input matInput placeholder="Beats per minute" value="100" type="number" />
+          </mat-form-field>
+        </div>
+
+        <div class="slider-container">
+          <div>
+            <h4>Tempo</h4>
+            <mat-slider min="1" max="5" step="0.5" value="1.5" step="1" tickInterval="1" vertical="true">
+            </mat-slider>
+          </div>
+        
+          <div>
+            <h4>Temperature</h4>
+            <mat-slider min="1" max="5" step="0.5" value="1.5" vertical="true">
+            </mat-slider>
+          </div>
+        
+          <div>
+            <h4>Octave</h4>
+            <mat-slider min="1" max="5" step="0.5" value="1.5" vertical="true">
+            </mat-slider>
+          </div>
+        </div>
+        
+        <div class="generate">
+          <button class="generate-button" mat-raised-button color="primary">Generate</button>
+        </div>
+      </fieldset>
+      <!-- <button mat-button mat-flat-button color="primary" class="play-control-btn">Play</button>
+      <button mat-button mat-flat-button color="primary" class="play-control-btn">Pause</button> -->
+    </div>
 
   </mat-sidenav>
 
