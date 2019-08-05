@@ -34,6 +34,7 @@ mat-sidenav {
 
 .current-playing-desc {
   display: flex;
+  flex-wrap: wrap;
   align-content: space-around;
   justify-content: space-around;
 }
@@ -59,6 +60,7 @@ mat-sidenav {
   position: relative;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   margin-top: 2rem;
 }
 
@@ -74,7 +76,7 @@ mat-sidenav-content {
 
 @media screen and (max-width: 700px) {
   mat-sidenav {
-    width: 220px;
+    width: 300px;
   }
 }
 
