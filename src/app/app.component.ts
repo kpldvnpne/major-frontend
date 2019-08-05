@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { API_BASE_URL } from './constants';
 import { AppService } from './app.service';
+import { PlayerStatus } from './player-status';
 
 @Component({
   selector: 'app-root',
@@ -18,5 +19,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     
+  }
+
+  public handleStatusChange(status: PlayerStatus) {
+    console.log(status);
   }
 }

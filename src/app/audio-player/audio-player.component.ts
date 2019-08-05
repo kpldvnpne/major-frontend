@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
+import { PlayerStatus } from '../player-status';
 
 @Component({
   selector: 'app-audio-player',
@@ -10,12 +11,34 @@ export class AudioPlayerComponent implements OnInit {
 
   @Input() totalTime: number = 0;
   @Input() skipInterval: number = 10;
-  public timePosition: number = 0;
-  public isPlaying: boolean = false;
+  @Output() statusChange = new EventEmitter<PlayerStatus>();
+
+  // public timePosition: number = 0;
+  // public isPlaying: boolean = false;
 
   @ViewChild('sliderBackground') sliderDivRef: ElementRef;
 
   private timer: NodeJS.Timer;
+  private _timePosition: number = 0;
+  private _isPlaying: boolean = false;
+
+  public get timePosition():number {
+    return this._timePosition;
+  }
+
+  public set timePosition(newTimePosition: number) {
+    this._timePosition = Math.max(Math.min(newTimePosition, this.totalTime), 0);
+    this.emitStatusChangeEvent();
+  }
+
+  public get isPlaying(): boolean {
+    return this._isPlaying;
+  }
+
+  public set isPlaying(newStatus: boolean) {
+    this._isPlaying = newStatus;
+    this.emitStatusChangeEvent();
+  }
     
   constructor() { 
   }
@@ -35,10 +58,10 @@ export class AudioPlayerComponent implements OnInit {
   public resume(): void {
     this.isPlaying = true;
     this.timer = setInterval(() => {
-      if (this.timePosition < this.totalTime) {
-        this.timePosition += 1;
+      if (this._timePosition < this.totalTime) {
+        this._timePosition += 1;
       } else {
-        this.stop();
+        this.pause();
       }
     }, 1000);
   }
@@ -80,7 +103,6 @@ export class AudioPlayerComponent implements OnInit {
     const windowMouseMoveListener = (event: MouseEvent) => {
       const relativeMousePosition = event.pageX - sliderDivRef.getBoundingClientRect().left;
       const seekPosition = Math.min(Math.max(relativeMousePosition / sliderDivRef.offsetWidth, 0), 1);
-      console.log(seekPosition);
       this.timePosition = seekPosition * this.totalTime;
     };
     window.addEventListener('mousemove', windowMouseMoveListener);
@@ -108,6 +130,13 @@ export class AudioPlayerComponent implements OnInit {
     } else {
       return convertFactory.format('YYYY DDD HH:mm:ss');
     }
+  }
+
+  public emitStatusChangeEvent() {
+    this.statusChange.emit({
+      isPlaying: this.isPlaying,
+      timePosition: this.timePosition
+    });
   }
 
 }
