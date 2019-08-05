@@ -48,6 +48,7 @@ class Scene {
     camera.position.copy(controls.center).add(new THREE.Vector3(2, 6, 9));
 
     $(window).resize(this.onresize);
+    $(container).resize(this.onresize);
 
     // set instance variables
     this.$container = $container;

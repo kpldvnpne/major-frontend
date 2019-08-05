@@ -5,6 +5,7 @@ import { API_BASE_URL } from '../constants';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { MatSidenav } from '@angular/material';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   @ViewChild('canvas') canvasRef: ElementRef;
+  @ViewChild('sidenav') sidenav: MatSidenav;
 
   public opened = true;
   public instruments = {
@@ -98,6 +100,11 @@ export class DashboardComponent implements OnInit {
   public onClick() {
     this.authService.logout();
     this.router.navigateByUrl('/login');
+  }
+
+  public toggleSideNav() {
+    this.sidenav.toggle();
+    this.app.resize();
   }
 
   public midiFileChange(event: any) {

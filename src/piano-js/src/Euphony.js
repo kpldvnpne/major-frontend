@@ -133,6 +133,10 @@ class Euphony {
   on(eventName, callback) {
     return this[`on${eventName}`] = callback;
   }
+
+  resize() {
+    this.scene.onresize();
+  }
 }
 
 // exports to global

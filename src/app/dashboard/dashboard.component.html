@@ -1,5 +1,5 @@
-<mat-sidenav-container [hasBackdrop]=false>
-  <mat-sidenav #sidenav mode=push [(opened)]="opened">
+<mat-sidenav-container [autosize]="true" [hasBackdrop]=false>
+  <mat-sidenav #sidenav mode=side [(opened)]="opened">
     <div>
       <mat-icon mat-list-icon style="height:100%; position:relative; top:45%; left:20%;" (click)="sidenav.toggle()">
         <img src="../assets/icons/logo6.png" style="height:5rem; " />
@@ -47,20 +47,17 @@
 
     <mat-toolbar class="matbar" color="accent">
 
-      <button mat-button (click)="sidenav.toggle()">
+      <button mat-button class="menu-toggle" (click)="toggleSideNav()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span class=spacer>AIM (AI in Music generation)</span>
-      <div>
-        <button class="logout" (click)= "onClick()"
-            type="submit"
-            value="logout">Logout</button>
+      <span class="app-title">AIM (AI in Music generation)</span>
+      <div class="logout">
+        <button class="logout-button" (click)= "onClick()">Logout</button>
       </div>
 
     </mat-toolbar>
 
     <div #canvas id="canvas"></div>
-    <router-outlet></router-outlet>
   </mat-sidenav-content>
 
 </mat-sidenav-container>
