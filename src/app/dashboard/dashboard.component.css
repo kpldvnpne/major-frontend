@@ -37,6 +37,12 @@ mat-sidenav {
   flex-wrap: wrap;
   align-content: space-around;
   justify-content: space-around;
+  align-items: center;
+}
+
+.instruments-used {
+  display: flex;
+  flex-direction: column;
 }
 
 .generate-input-fields {
@@ -122,6 +128,7 @@ mat-sidenav-content {
 }
 
 #audio-player {
+  margin: 0 10px;
   justify-self: center;
   height: 70px;
   position: relative;

@@ -6,7 +6,9 @@ import { AppService } from '../app.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material';
+import { PlayerStatus } from '../player-status';
 
+export const MILLISECONDS_IN_SECOND = 1000;
 
 @Component({
   selector: 'app-dashboard',
@@ -89,13 +91,6 @@ export class DashboardComponent implements OnInit {
       this.app.initScene(this.canvasRef.nativeElement);
       this.MIDI.programChange(1, 24);
     });
-
-    
-    // console.log(global.player);
-    // this.app.start();
-    // this.app.loadMidiFile(midiFile, function() {
-    //   global.player.play();
-    // }
   }
 
   public onClick() {
@@ -128,14 +123,29 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  public handlePlayerStatusChange({isPlaying, timePosition}: PlayerStatus) {
+    if (isPlaying) {
+      if (!this.app.isPlaying) {
+        this.app.resume();
+      }
+    } else {
+      if (this.app.isPlaying) {
+        this.app.stop();
+      }
+    }
+
+    this.app.setCurrentTime(timePosition * MILLISECONDS_IN_SECOND);
+  }
+
   private changeMidiFile(filename: string) {
     this.app.loadMidiFile(API_BASE_URL + "api/midi/file/" + filename, () => {
-      setTimeout(() => {
+      // as there is a play controller, disable auto start
+      /* setTimeout(() => {
         this.app.start();
-      }, 1000);
+      }, 1000); */
 
       // update time length
-      this.musicLength = this.app.getEndTime();
+      this.musicLength = this.app.getEndTime() / MILLISECONDS_IN_SECOND;
     
       this.channelsInstruments = this.getChannelsInstruments();
       

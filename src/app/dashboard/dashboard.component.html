@@ -21,7 +21,7 @@
               </mat-select>
             </mat-form-field>
           </div>
-          <div>
+          <div class="instruments-used">
             <h4>INSTRUMENTS USED</h4>
             <mat-form-field *ngFor="let channelInstrument of channelsInstrumentsList;">
               <label>Channel: {{channelInstrument.channel}}</label>
@@ -98,8 +98,6 @@
           <button class="generate-button" mat-raised-button color="primary">Generate</button>
         </div>
       </fieldset>
-      <!-- <button mat-button mat-flat-button color="primary" class="play-control-btn">Play</button>
-      <button mat-button mat-flat-button color="primary" class="play-control-btn">Pause</button> -->
     </div>
 
   </mat-sidenav>
@@ -119,7 +117,7 @@
     </mat-toolbar>
 
     <div #canvas id="canvas"></div>
-    <app-audio-player id="audio-player" [totalTime]="musicLength" (statusChange)="handleStatusChange($event)"></app-audio-player>
+    <app-audio-player id="audio-player" [totalTime]="musicLength" (statusChange)="handlePlayerStatusChange($event)"></app-audio-player>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

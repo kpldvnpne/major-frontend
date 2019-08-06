@@ -20,8 +20,4 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     
   }
-
-  // public handleStatusChange(status: PlayerStatus) {
-  //   console.log(status);
-  // }
 }
