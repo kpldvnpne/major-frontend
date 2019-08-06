@@ -117,7 +117,7 @@
     </mat-toolbar>
 
     <div #canvas id="canvas"></div>
-    <app-audio-player id="audio-player" [totalTime]="musicLength" (statusChange)="handlePlayerStatusChange($event)"></app-audio-player>
+    <app-audio-player #audioPlayer id="audio-player" [totalTime]="musicLength" (statusChange)="handlePlayerStatusChange($event)"></app-audio-player>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

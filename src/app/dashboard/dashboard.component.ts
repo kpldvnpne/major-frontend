@@ -7,6 +7,7 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material';
 import { PlayerStatus } from '../player-status';
+import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 
 export const MILLISECONDS_IN_SECOND = 1000;
 
@@ -19,6 +20,7 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('canvas') canvasRef: ElementRef;
   @ViewChild('sidenav') sidenav: MatSidenav;
+  @ViewChild(AudioPlayerComponent) audioPlayer: AudioPlayerComponent;
 
   public opened = true;
   public musicLength: number = 0;
@@ -125,11 +127,11 @@ export class DashboardComponent implements OnInit {
 
   public handlePlayerStatusChange({isPlaying, timePosition}: PlayerStatus) {
     if (isPlaying) {
-      if (!this.app.isPlaying) {
+      if (!this.app.playing) {
         this.app.resume();
       }
     } else {
-      if (this.app.isPlaying) {
+      if (this.app.playing) {
         this.app.stop();
       }
     }
@@ -143,6 +145,8 @@ export class DashboardComponent implements OnInit {
       /* setTimeout(() => {
         this.app.start();
       }, 1000); */
+      // reset music player
+      this.audioPlayer.stop();
 
       // update time length
       this.musicLength = this.app.getEndTime() / MILLISECONDS_IN_SECOND;
