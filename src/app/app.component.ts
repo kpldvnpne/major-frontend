@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     
   }
 
-  public handleStatusChange(status: PlayerStatus) {
-    console.log(status);
-  }
+  // public handleStatusChange(status: PlayerStatus) {
+  //   console.log(status);
+  // }
 }

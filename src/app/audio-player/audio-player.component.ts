@@ -18,7 +18,7 @@ export class AudioPlayerComponent implements OnInit {
 
   @ViewChild('sliderBackground') sliderDivRef: ElementRef;
 
-  private timer: NodeJS.Timer;
+  private timer: any;
   private _timePosition: number = 0;
   private _isPlaying: boolean = false;
 

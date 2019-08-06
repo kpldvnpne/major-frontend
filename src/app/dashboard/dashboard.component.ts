@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   public opened = true;
+  public musicLength: number = 0;
   public instruments = {
     "acoustic_grand_piano": 0,
     "acoustic_guitar_nylon": 24,
@@ -132,6 +133,9 @@ export class DashboardComponent implements OnInit {
       setTimeout(() => {
         this.app.start();
       }, 1000);
+
+      // update time length
+      this.musicLength = this.app.getEndTime();
     
       this.channelsInstruments = this.getChannelsInstruments();
       
