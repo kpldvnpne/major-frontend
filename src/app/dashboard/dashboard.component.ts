@@ -61,9 +61,13 @@ export class DashboardComponent implements OnInit {
   public instrumentList: {id: number, name: string}[];
   public keyList: {id: number, name:string}[];
   // --
-  public genreSelected: number;
-  public instrumentSelected: number;
-  public keySelected: string;
+  public genreSelected: number = 0;
+  public instrumentSelected: number = 0;
+  public keySelected: string = "C";
+  public numBars: number = 4;
+  public bpm: number = 100;
+  public chordTemperature:number;
+  public octave: number;
   
   public parseChannelsInstruments(): any{
     let list:any = [];
@@ -121,9 +125,9 @@ export class DashboardComponent implements OnInit {
     const generateOptions = {
       "genre_id": this.genreSelected,
       "instrument_id": this.instrumentSelected,
-      "num_bars": 64,
-      "BPM": 100,
-      "chord_temperature": 1,
+      "num_bars": this.numBars,
+      "BPM": this.bpm,
+      // "chord_temperature": this.chordTemperature,
       "seed_length": 4,
 
       "note_cap": 2,
@@ -134,8 +138,20 @@ export class DashboardComponent implements OnInit {
     };
     this.apiService.generateMusic(generateOptions)
       .subscribe((response: any) => {
-        console.log(response);
+        const midiFile = this.convertMidiToBase64(response);
+        this.changeMidiTrack(midiFile);
       });
+  }
+
+  private convertMidiToBase64(responseText: string) {
+    let t = responseText || '';
+    let ff = [];
+    let mx = t.length;
+    let scc = String.fromCharCode;
+    for (let z = 0; z < mx; ++z) {
+      ff[z] = scc(t.charCodeAt(z) & 255);
+    }
+    return "data:audio/midi;base64," + window.btoa(ff.join(''));
   }
 
   public logoutClick() {
@@ -183,7 +199,11 @@ export class DashboardComponent implements OnInit {
   }
 
   private changeMidiFile(filename: string) {
-    this.app.loadMidiFile(API_BASE_URL + "api/midi/file/" + filename, () => {
+    this.changeMidiTrack(API_BASE_URL + "api/midi/file/" + filename);
+  }
+
+  private changeMidiTrack(file: string) {
+    this.app.loadMidiFile(file, () => {
       // as there is a play controller, disable auto start
       /* setTimeout(() => {
         this.app.start();
@@ -193,13 +213,13 @@ export class DashboardComponent implements OnInit {
 
       // update time length
       this.musicLength = this.app.getEndTime() / MILLISECONDS_IN_SECOND;
-    
+
       this.channelsInstruments = this.getChannelsInstruments();
-      
+
       for (let channel in this.channelsInstruments) {
         if (this.channelsInstruments.hasOwnProperty(channel)) {
           let instrument = this.channelsInstruments[channel];
-          
+
           if (this.instruments[instrument] === undefined) {
             instrument = "acoustic_grand_piano";
           }
@@ -208,7 +228,7 @@ export class DashboardComponent implements OnInit {
           this.MIDI.programChange(channel, respectiveChannel);
         }
       }
-      
+
       this.channelsInstrumentsList = this.parseChannelsInstruments();
     });
   }

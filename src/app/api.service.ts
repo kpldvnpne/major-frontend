@@ -17,6 +17,6 @@ export class APIService {
 
   public generateMusic(options: any) {
     const url = Location.joinWithSlash(AI_API_URL, "/api/v1/generate");
-    return this.http.post(url, options);
+    return this.http.post(url, options, {responseType: 'text'});
   }
 }
