@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit {
   public keySelected: string = "C";
   public numBars: number = 4;
   public bpm: number = 100;
-  public chordTemperature:number;
+  public chordTemperature:number = 1;
   public octave: number;
   
   public parseChannelsInstruments(): any{
@@ -127,7 +127,7 @@ export class DashboardComponent implements OnInit {
       "instrument_id": this.instrumentSelected,
       "num_bars": this.numBars,
       "BPM": this.bpm,
-      // "chord_temperature": this.chordTemperature,
+      "chord_temperature": this.chordTemperature,
       "seed_length": 4,
 
       "note_cap": 2,
@@ -138,7 +138,9 @@ export class DashboardComponent implements OnInit {
     };
     this.apiService.generateMusic(generateOptions)
       .subscribe((response: any) => {
+        console.log(response);
         const midiFile = this.convertMidiToBase64(response);
+        console.log(midiFile);
         this.changeMidiTrack(midiFile);
       });
   }
@@ -151,6 +153,7 @@ export class DashboardComponent implements OnInit {
     for (let z = 0; z < mx; ++z) {
       ff[z] = scc(t.charCodeAt(z) & 255);
     }
+    console.log(ff.join(''));
     return "data:audio/midi;base64," + window.btoa(ff.join(''));
   }
 
