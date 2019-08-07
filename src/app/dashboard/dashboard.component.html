@@ -41,27 +41,27 @@
         <div class="generate-input-fields">
           <mat-form-field class="genre-options">
             <mat-label>Select Genre</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let genre of genreList" [value]="genre">
-                {{genre | uppercase}
+            <mat-select [(value)]='genreSelected'>
+              <mat-option *ngFor="let genre of genreList" [value]="genre.id">
+                {{genre.name | uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="instrument-options">
             <mat-label>Select Instrument</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let instrument of instrumentList" [value]="instrument">
-                {{instrument | uppercase}
+            <mat-select [(value)]='instrumentSelected'>
+              <mat-option *ngFor="let instrument of instrumentList" [value]="instrument.id">
+                {{instrument.name | uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="key-options">
             <mat-label>Select Key</mat-label>
-            <mat-select>
+            <mat-select [(value)]="keySelected">
               <mat-option *ngFor="let key of keyList" [value]="key">
-                {{key | uppercase}
+                {{key | uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -95,7 +95,7 @@
         </div>
         
         <div class="generate">
-          <button class="generate-button" mat-raised-button color="primary">Generate</button>
+          <button class="generate-button" mat-raised-button color="primary" (click)="generateMusic()">Generate</button>
         </div>
       </fieldset>
     </div>
@@ -111,7 +111,7 @@
       </button>
       <span class="app-title">AIM (AI in Music generation)</span>
       <div class="logout">
-        <button class="logout-button" (click)= "onClick()">Logout</button>
+        <button class="logout-button" (click)= "logoutClick()">Logout</button>
       </div>
 
     </mat-toolbar>

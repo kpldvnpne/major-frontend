@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material';
 import { PlayerStatus } from '../player-status';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
+import { APIService } from '../api.service';
 
 export const MILLISECONDS_IN_SECOND = 1000;
 
@@ -54,6 +55,15 @@ export class DashboardComponent implements OnInit {
   public musicFiles = ['empty'];
   public channelsInstruments: any;
   public channelsInstrumentsList:any;
+
+  // for controlPanel
+  public genreList: {id: number, name: string}[];
+  public instrumentList: {id: number, name: string}[];
+  public keyList: {id: number, name:string}[];
+  // --
+  public genreSelected: number;
+  public instrumentSelected: number;
+  public keySelected: string;
   
   public parseChannelsInstruments(): any{
     let list:any = [];
@@ -74,7 +84,8 @@ export class DashboardComponent implements OnInit {
     private appService: AppService, 
     private http: HttpClient, 
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private apiService: APIService
   ) {
     this.appService.getMidiFiles()
       .subscribe((midiFiles: string[]) => {
@@ -93,9 +104,41 @@ export class DashboardComponent implements OnInit {
       this.app.initScene(this.canvasRef.nativeElement);
       this.MIDI.programChange(1, 24);
     });
+
+    this.loadControlPanelInfo();
   }
 
-  public onClick() {
+  public loadControlPanelInfo() {
+    this.apiService.getAllInformation()
+      .subscribe(({ genre, instruments, keys }: any) => {
+        this.genreList = genre;
+        this.instrumentList = instruments;
+        this.keyList = keys;
+      });
+  }
+
+  public generateMusic() {
+    const generateOptions = {
+      "genre_id": this.genreSelected,
+      "instrument_id": this.instrumentSelected,
+      "num_bars": 64,
+      "BPM": 100,
+      "chord_temperature": 1,
+      "seed_length": 4,
+
+      "note_cap": 2,
+
+      "key": this.keySelected,
+      "octave_type": "lower",
+      "which_octave": 2
+    };
+    this.apiService.generateMusic(generateOptions)
+      .subscribe((response: any) => {
+        console.log(response);
+      });
+  }
+
+  public logoutClick() {
     this.authService.logout();
     this.router.navigateByUrl('/login');
   }
@@ -168,16 +211,6 @@ export class DashboardComponent implements OnInit {
       
       this.channelsInstrumentsList = this.parseChannelsInstruments();
     });
-    
-    // this.appService.getMidiFile(filename)
-    //   .subscribe((midiFile: any) => {
-    //     // console.log(midiFile);
-    //     this.app.loadMidiFile(midiFile, () => {
-    //       setTimeout(() => {
-    //         this.app.start();
-    //       }, 2000);
-    //     })
-    //   });
   }
 
   private getChannelsInstruments() {
