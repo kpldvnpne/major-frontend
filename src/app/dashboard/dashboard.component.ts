@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
-import { API_BASE_URL } from '../constants';
+import { API_BASE_URL, AI_API_URL } from '../constants';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -138,23 +138,10 @@ export class DashboardComponent implements OnInit {
     };
     this.apiService.generateMusic(generateOptions)
       .subscribe((response: any) => {
-        console.log(response);
-        const midiFile = this.convertMidiToBase64(response);
-        console.log(midiFile);
-        this.changeMidiTrack(midiFile);
+        const midiPath = response.link;
+        const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
+        this.changeMidiTrack(midiUrl);
       });
-  }
-
-  private convertMidiToBase64(responseText: string) {
-    let t = responseText || '';
-    let ff = [];
-    let mx = t.length;
-    let scc = String.fromCharCode;
-    for (let z = 0; z < mx; ++z) {
-      ff[z] = scc(t.charCodeAt(z) & 255);
-    }
-    console.log(ff.join(''));
-    return "data:audio/midi;base64," + window.btoa(ff.join(''));
   }
 
   public logoutClick() {
