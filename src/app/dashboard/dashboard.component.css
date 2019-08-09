@@ -54,11 +54,9 @@ mat-sidenav {
 
 .generate {
   width: 100%;
-}
-
-.generate-button {
-  margin-right: 0;
-  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .slider-container {

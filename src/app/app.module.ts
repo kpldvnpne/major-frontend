@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { AudioPlayerComponent } from './audio-player/audio-player.component';
+import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,11 @@ import { AudioPlayerComponent } from './audio-player/audio-player.component';
     LoginComponent,
     DashboardComponent,
     AudioPlayerComponent,
+    PdfViewerComponent,
+  ],
+  // entry components provides ComponentFactory for use with MatDialog
+  entryComponents: [
+    PdfViewerComponent
   ],
   imports: [
     BrowserModule,

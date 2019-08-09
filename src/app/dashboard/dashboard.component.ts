@@ -5,10 +5,11 @@ import { API_BASE_URL, AI_API_URL } from '../constants';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav, MatDialog } from '@angular/material';
 import { PlayerStatus } from '../player-status';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 import { APIService } from '../api.service';
+import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 
 export const MILLISECONDS_IN_SECOND = 1000;
 
@@ -68,6 +69,9 @@ export class DashboardComponent implements OnInit {
   public bpm: number = 100;
   public chordTemperature:number = 1;
   public octave: number;
+
+  // download music link
+  public DOWNLOAD_MUSIC_URL = AI_API_URL + "/api/v1/music_mp3";
   
   public parseChannelsInstruments(): any{
     let list:any = [];
@@ -89,7 +93,8 @@ export class DashboardComponent implements OnInit {
     private http: HttpClient, 
     private authService: AuthService,
     private router: Router,
-    private apiService: APIService
+    private apiService: APIService,
+    private dialog: MatDialog
   ) {
     this.appService.getMidiFiles()
       .subscribe((midiFiles: string[]) => {
@@ -142,6 +147,19 @@ export class DashboardComponent implements OnInit {
         const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
         this.changeMidiTrack(midiUrl);
       });
+  }
+
+  public viewPdf() {
+    const pdfUrl = Location.joinWithSlash(AI_API_URL, "/api/v1/sheet_music/pdf");
+    const dialogRef = this.dialog.open(PdfViewerComponent, {
+      width: '90%',
+      height: '90%',
+      data: {pdfUrl: pdfUrl}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("The dialog was closed");
+    })
   }
 
   public logoutClick() {
