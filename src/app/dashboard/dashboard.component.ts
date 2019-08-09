@@ -10,6 +10,7 @@ import { PlayerStatus } from '../player-status';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 import { APIService } from '../api.service';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
+import { tap } from 'rxjs/operators';
 
 export const MILLISECONDS_IN_SECOND = 1000;
 
@@ -57,7 +58,7 @@ export class DashboardComponent implements OnInit {
   public channelsInstruments: any;
   public channelsInstrumentsList:any;
 
-  // for controlPanel
+  /* For ControlPanel */
   public genreList: {id: number, name: string}[];
   public instrumentList: {id: number, name: string}[];
   public keyList: {id: number, name:string}[];
@@ -69,7 +70,8 @@ export class DashboardComponent implements OnInit {
   public bpm: number = 100;
   public chordTemperature:number = 1;
   public octave: number;
-
+  // state ofo generation
+  public musicIsGenerated = false;
   // download music link
   public DOWNLOAD_MUSIC_URL = AI_API_URL + "/api/v1/music_mp3";
   
@@ -142,6 +144,9 @@ export class DashboardComponent implements OnInit {
       "which_octave": 2
     };
     this.apiService.generateMusic(generateOptions)
+      .pipe(
+        tap(() => this.musicIsGenerated = true)
+      )
       .subscribe((response: any) => {
         const midiPath = response.link;
         const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
