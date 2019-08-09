@@ -67,6 +67,16 @@ mat-sidenav {
   align-items: center;
 }
 
+.octave-type {
+  display: inline-block;
+}
+
+.octave-type-option {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: block;
+}
+
 .generate {
   width: 100%;
   display: flex;

@@ -13,6 +13,7 @@ import {
   MatProgressSpinnerModule,
   MatSliderModule,
   MatDialogModule,
+  MatRadioModule,
 } from '@angular/material';
 
 const material = [
@@ -28,7 +29,8 @@ const material = [
   MatInputModule,
   MatProgressSpinnerModule,
   MatSliderModule,
-  MatDialogModule
+  MatDialogModule,
+  MatRadioModule
 ];
 
 @NgModule({

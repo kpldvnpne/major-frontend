@@ -90,7 +90,14 @@
         
           <div class="octave">
             <h4>Octave</h4>
-            <mat-slider [(ngModel)]="octave" min="0" max="3" step="1" value="2" vertical="true" [thumbLabel]="true"></mat-slider>
+            <div>
+              <mat-slider [(ngModel)]="whichOctave" min="0" max="3" step="1" value="2" vertical="true" [thumbLabel]="true"></mat-slider>
+              <mat-radio-group class="octave-type" [(ngModel)]="octaveType">
+                <mat-radio-button class="octave-type-option" *ngFor="let octaveType of octaveTypes" [value]="octaveType">
+                  {{octaveType}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
           </div>
         </div>
         

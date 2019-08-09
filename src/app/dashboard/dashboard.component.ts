@@ -62,6 +62,7 @@ export class DashboardComponent implements OnInit {
   public genreList: {id: number, name: string}[];
   public instrumentList: {id: number, name: string}[];
   public keyList: {id: number, name:string}[];
+  public octaveTypes = ["lower", "higher"];
   // --
   public genreSelected: number = 0;
   public instrumentSelected: number = 0;
@@ -71,8 +72,9 @@ export class DashboardComponent implements OnInit {
   public seedLength: number = 4;
   public chordTemperature: number = 1;
   public noteCap: number = 2;
-  public octave: number = 1;
-  // state ofo generation
+  public whichOctave: number = 1;
+  public octaveType: "lower" | "higher" = "lower";
+  // state of generation
   public musicIsGenerated = false;
   // download music link
   public DOWNLOAD_MUSIC_URL = Location.joinWithSlash(AI_API_URL, "/api/v1/music_mp3");
