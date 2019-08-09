@@ -22,6 +22,11 @@ export class APIService {
     return this.http.post(url, options);
   }
 
+  public modifyMusic(options: any) {
+    const url = Location.joinWithSlash(AI_API_URL, "/api/v1/modify");
+    return this.http.post(url, options);
+  }
+
   public getPdfSrc(pdfUrl: string): Observable<string> {
     const url = Location.joinWithSlash(AI_API_URL, "/api/v1/sheet_music/pdf");
     const headers = new HttpHeaders();

@@ -158,6 +158,20 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  public modifyMusic() {
+    const modifyOptions = {
+      "key": this.keySelected,
+      "octave_type": this.octaveType,
+      "whichOctave": this.whichOctave,
+    };
+    this.apiService.modifyMusic(modifyOptions)
+      .subscribe((response: any) => {
+        const midiPath = response.link;
+        const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
+        this.changeMidiTrack(midiUrl);
+      });
+  }
+
   public viewPdf() {
     const pdfUrl = Location.joinWithSlash(AI_API_URL, "/api/v1/sheet_music/pdf");
     const dialogRef = this.dialog.open(PdfViewerComponent, {
