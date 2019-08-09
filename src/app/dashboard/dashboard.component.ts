@@ -135,10 +135,27 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  // TODO: register only when visualizer is on focus
   public registerKeyboardEvents() {
+    this.registerForPianoKeyPresses();
+    
+  }
+
+  public registerForOctaveChangeEvents() {
+    window.addEventListener("keypress", (event: KeyboardEvent) => {
+      const keyCode = event.keyCode;
+      if (keyCode === 38) {
+        this.musicGenerationService.increaseOctave();
+      } else if (keyCode == 40) {
+        this.musicGenerationService.decreseOctave();
+      }
+    });
+  }
+
+  public registerForPianoKeyPresses() {
     const keyIsPressed = {};
     const handleKeyboardEvent = (event: KeyboardEvent, keyStatus: "up" | "down") => {
-      const note = this.musicGenerationService.keyCodeToNote(event.keyCode);
+      const note = this.musicGenerationService.keyCodeToNote(event.keyCode, 4);
       if (note === -1)
         return;
       if (keyStatus === "down") {

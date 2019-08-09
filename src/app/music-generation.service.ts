@@ -1,11 +1,23 @@
 import { Injectable } from '@angular/core';
 
+const KEYS_IN_OCTAVE = 12;
+
 @Injectable({
   providedIn: 'root'
 })
 export class MusicGenerationService {
 
+  private octave: number = 3;
+
   constructor() { }
+
+  public increaseOctave(): void {
+    this.octave++;
+  }
+
+  public decreseOctave(): void {
+    this.octave--;
+  }
 
   public playNoteOn(note: number) {
     this.playNote(note, "on");
@@ -70,7 +82,9 @@ export class MusicGenerationService {
     if (keyCode == 221) note = 31; // G 2
     //-----------------------------------
 
-    if (note == -1) return -1;
-    return keyCode;
+    if (this.octave)
+      return note + this.octave * KEYS_IN_OCTAVE;
+    else
+      return note;
   }
 }
