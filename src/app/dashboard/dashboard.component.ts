@@ -138,15 +138,17 @@ export class DashboardComponent implements OnInit {
   // TODO: register only when visualizer is on focus
   public registerKeyboardEvents() {
     this.registerForPianoKeyPresses();
-    
+    this.registerForOctaveChangeEvents();    
   }
 
   public registerForOctaveChangeEvents() {
-    window.addEventListener("keypress", (event: KeyboardEvent) => {
+    window.addEventListener("keyup", (event: KeyboardEvent) => {
       const keyCode = event.keyCode;
-      if (keyCode === 38) {
+      const SHIFT_KEY = 16;
+      const CTRL_KEY = 17;
+      if (keyCode === SHIFT_KEY) {
         this.musicGenerationService.increaseOctave();
-      } else if (keyCode == 40) {
+      } else if (keyCode === CTRL_KEY) {
         this.musicGenerationService.decreseOctave();
       }
     });
@@ -155,7 +157,7 @@ export class DashboardComponent implements OnInit {
   public registerForPianoKeyPresses() {
     const keyIsPressed = {};
     const handleKeyboardEvent = (event: KeyboardEvent, keyStatus: "up" | "down") => {
-      const note = this.musicGenerationService.keyCodeToNote(event.keyCode, 4);
+      const note = this.musicGenerationService.keyCodeToNote(event.keyCode);
       if (note === -1)
         return;
       if (keyStatus === "down") {

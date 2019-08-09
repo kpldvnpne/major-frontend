@@ -7,7 +7,13 @@ const KEYS_IN_OCTAVE = 12;
 })
 export class MusicGenerationService {
 
-  private octave: number = 3;
+  private _octave: number = 3;
+  private set octave(octave: number) {
+    this._octave = Math.min(Math.max(0, octave), 10);
+  }
+  private get octave() {
+    return this._octave;
+  }
 
   constructor() { }
 
@@ -82,9 +88,9 @@ export class MusicGenerationService {
     if (keyCode == 221) note = 31; // G 2
     //-----------------------------------
 
-    if (this.octave)
-      return note + this.octave * KEYS_IN_OCTAVE;
+    if (note === -1)
+      return -1;
     else
-      return note;
+      return note + this.octave * KEYS_IN_OCTAVE;
   }
 }
