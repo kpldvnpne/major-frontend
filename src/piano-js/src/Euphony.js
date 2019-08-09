@@ -137,6 +137,14 @@ class Euphony {
   resize() {
     this.scene.onresize();
   }
+
+  pressKey(note) {
+    this.keyboard.press(note);
+  }
+
+  releaseKey(note) {
+    this.keyboard.release(note);
+  }
 }
 
 // exports to global

@@ -11,6 +11,7 @@ import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 import { APIService } from '../api.service';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 import { tap } from 'rxjs/operators';
+import { MusicGenerationService } from '../music-generation.service';
 
 export const MILLISECONDS_IN_SECOND = 1000;
 
@@ -96,10 +97,11 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private appService: AppService, 
-    private http: HttpClient, 
     private authService: AuthService,
-    private router: Router,
     private apiService: APIService,
+    private musicGenerationService: MusicGenerationService,
+    private http: HttpClient, 
+    private router: Router,
     private dialog: MatDialog
   ) {
     this.appService.getMidiFiles()
@@ -121,6 +123,7 @@ export class DashboardComponent implements OnInit {
     });
 
     this.loadControlPanelInfo();
+    this.registerKeyboardEvents();
   }
 
   public loadControlPanelInfo() {
@@ -130,6 +133,29 @@ export class DashboardComponent implements OnInit {
         this.instrumentList = instruments;
         this.keyList = keys;
       });
+  }
+
+  public registerKeyboardEvents() {
+    const keyIsPressed = {};
+    const handleKeyboardEvent = (event: KeyboardEvent, keyStatus: "up" | "down") => {
+      const note = this.musicGenerationService.keyCodeToNote(event.keyCode);
+      if (note === -1)
+        return;
+      if (keyStatus === "down") {
+        if (!keyIsPressed[note]) {
+          keyIsPressed[note] = true;
+          this.musicGenerationService.playNoteOn(note);
+          this.app.pressKey(note);
+        }
+      } else if (keyStatus === "up") {
+        keyIsPressed[note] = false;
+        this.musicGenerationService.playNoteOff(note);
+        this.app.releaseKey(note);
+      }
+    };
+
+    window.addEventListener('keydown', (event: KeyboardEvent) => handleKeyboardEvent(event, "down"));
+    window.addEventListener('keyup', (event: KeyboardEvent) => handleKeyboardEvent(event, "up"));
   }
 
   public generateMusic() {
