@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { AI_API_URL } from './constants';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +22,13 @@ export class APIService {
     return this.http.post(url, options);
   }
 
-  public getPdfSrc(): Observable<string> {
+  public getPdfSrc(pdfUrl: string): Observable<string> {
     const url = Location.joinWithSlash(AI_API_URL, "/api/v1/sheet_music/pdf");
     const headers = new HttpHeaders();
     headers.set("Accept", "application/pdf");
     return this.http.get(url, {headers: headers, responseType: 'blob'})
       .pipe(
-        map((blob: Blob) => <string>URL.createObjectURL(blob))
+        map((blob: Blob) => <string>URL.createObjectURL(blob)),
       );
   }
 }

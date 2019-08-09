@@ -18,7 +18,7 @@ export class PdfViewerComponent implements OnDestroy {
     public apiService: APIService
   ) { 
     this.pdfUrl = data.pdfUrl;
-    this.apiService.getPdfSrc()
+    this.apiService.getPdfSrc(this.pdfUrl)
       .subscribe((pdfSrc: string) => this.pdfSrc = pdfSrc);
   }
 
