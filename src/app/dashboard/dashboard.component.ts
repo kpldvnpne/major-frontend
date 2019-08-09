@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
   // state ofo generation
   public musicIsGenerated = false;
   // download music link
-  public DOWNLOAD_MUSIC_URL = AI_API_URL + "/api/v1/music_mp3";
+  public DOWNLOAD_MUSIC_URL = Location.joinWithSlash(AI_API_URL, "/api/v1/music_mp3");
   
   public parseChannelsInstruments(): any{
     let list:any = [];
