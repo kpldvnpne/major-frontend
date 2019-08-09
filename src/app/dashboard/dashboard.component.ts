@@ -139,13 +139,13 @@ export class DashboardComponent implements OnInit {
       "num_bars": this.numBars,
       "BPM": this.bpm,
       "chord_temperature": this.chordTemperature,
-      "seed_length": 4,
+      "seed_length": this.seedLength,
 
-      "note_cap": 2,
+      "note_cap": this.noteCap,
 
       "key": this.keySelected,
-      "octave_type": "lower",
-      "which_octave": 2
+      "octave_type": this.octaveType,
+      "which_octave": this.whichOctave,
     };
     this.apiService.generateMusic(generateOptions)
       .pipe(
