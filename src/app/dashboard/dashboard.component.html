@@ -70,27 +70,27 @@
             <input matInput [(ngModel)]="numBars" placeholder="Number of bars" min="1" value="64" type="number" />
           </mat-form-field>
           <mat-form-field class="bpm">
-            <input matInput [(ngModel)]="bpm" placeholder="Beats per minute" min="1" value="100" type="number" />
+            <input matInput [(ngModel)]="bpm" placeholder="Beats per minute" value="100" type="number" />
           </mat-form-field>
-          <mat-form-field class="note-cap">
-            <input matInput [(ngModel)]="noteCap" placeholder="Note Cap" min="1" value="2" type="number" />
+          <mat-form-field class="seed-length">
+            <input matInput [(ngModel)]="seedLength" placeholder="Seed Length" value="4" type="number" />
           </mat-form-field>
         </div>
 
         <div class="slider-container">
-          <!-- <div>
-            <h4>Tempo</h4>
-            <mat-slider min="1" max="5" step="0.5" value="1.5" step="1" tickInterval="1" vertical="true"></mat-slider>
-          </div> -->
+          <div class="note-cap">
+            <h4>Note Cap</h4>
+            <mat-slider [(ngModel)]="noteCap" min="1" max="5" step="1" value="4" tickInterval="1" vertical="true" [thumbLabel]="true"></mat-slider>
+          </div>
         
           <div>
             <h4>Temperature</h4>
-            <mat-slider [(ngModel)]="chordTemperature" min="0.1" max="2" step="0.1" value="1" vertical="true"></mat-slider>
+            <mat-slider [(ngModel)]="chordTemperature" min="0.1" max="2" step="0.1" value="1" vertical="true" [thumbLabel]="true"></mat-slider>
           </div>
         
           <div>
             <h4>Octave</h4>
-            <mat-(ngModel)]="octave" min="1" max="10" step="1" value="2" vertical="true"></mat-slider>
+            <mat-slider [(ngModel)]="octave" min="0" max="3" step="1" value="2" vertical="true" [thumbLabel]="true"></mat-slider>
           </div>
         </div>
         

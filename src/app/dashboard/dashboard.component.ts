@@ -68,9 +68,10 @@ export class DashboardComponent implements OnInit {
   public keySelected: string = "C";
   public numBars: number = 4;
   public bpm: number = 100;
+  public seedLength: number = 4;
   public chordTemperature: number = 1;
   public noteCap: number = 2;
-  public octave: number;
+  public octave: number = 1;
   // state ofo generation
   public musicIsGenerated = false;
   // download music link
