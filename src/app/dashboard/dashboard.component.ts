@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
   public instrumentList: {id: number, name: string}[];
   public keyList: {id: number, name:string}[];
   public octaveTypes = ["lower", "higher"];
-  // --
+  // control panel inputs
   public genreSelected: number = 0;
   public instrumentSelected: number = 0;
   public keySelected: string = "C";
@@ -80,6 +80,10 @@ export class DashboardComponent implements OnInit {
   public controlPanelLoading: number = 0;
   // download music link
   public DOWNLOAD_MUSIC_URL = Location.joinWithSlash(AI_API_URL, "/api/v1/music_mp3");
+
+  /* For visualizer */
+  // state of visualizer
+  public pianoInputEnabled: boolean = false;
   
   public parseChannelsInstruments(): any{
     let list:any = [];
@@ -119,7 +123,6 @@ export class DashboardComponent implements OnInit {
     });
 
     this.loadControlPanelInfo();
-    this.registerKeyboardEvents();
   }
 
   public loadControlPanelInfo() {
@@ -151,14 +154,28 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  // TODO: register only when visualizer is on focus
-  public registerKeyboardEvents() {
-    this.registerForPianoKeyPresses();
-    this.registerForOctaveChangeEvents();    
+  public togglePianoInput() {
+    if (this.pianoInputEnabled) {
+      this.unregisterKeyboardEventsForPianoInputs();
+      this.pianoInputEnabled = false;
+    } else {
+      this.registerKeyboardEventsForPianoInputs();
+      this.pianoInputEnabled = true;
+    }
   }
 
-  public registerForOctaveChangeEvents() {
-    window.addEventListener("keyup", (event: KeyboardEvent) => {
+  public registerKeyboardEventsForPianoInputs() {
+    this.registerForPianoKeyPresses(true);
+    this.registerForOctaveChangeEvents(true);    
+  }
+
+  public unregisterKeyboardEventsForPianoInputs() {
+    this.registerForPianoKeyPresses(false);
+    this.registerForOctaveChangeEvents(false);    
+  }
+
+  public registerForOctaveChangeEvents(register: boolean) {
+    const keyUpEventListener = (event: KeyboardEvent) => {
       const keyCode = event.keyCode;
       const SHIFT_KEY = 16;
       const CTRL_KEY = 17;
@@ -167,10 +184,14 @@ export class DashboardComponent implements OnInit {
       } else if (keyCode === CTRL_KEY) {
         this.musicGenerationService.decreseOctave();
       }
-    });
+    };
+    if (register)
+      window.addEventListener("keyup", keyUpEventListener);
+    else
+      window.removeEventListener("keyup", keyUpEventListener);
   }
 
-  public registerForPianoKeyPresses() {
+  public registerForPianoKeyPresses(register: boolean) {
     const keyIsPressed = {};
     const handleKeyboardEvent = (event: KeyboardEvent, keyStatus: "up" | "down") => {
       const note = this.musicGenerationService.keyCodeToNote(event.keyCode);
@@ -189,8 +210,16 @@ export class DashboardComponent implements OnInit {
       }
     };
 
-    window.addEventListener('keydown', (event: KeyboardEvent) => handleKeyboardEvent(event, "down"));
-    window.addEventListener('keyup', (event: KeyboardEvent) => handleKeyboardEvent(event, "up"));
+    const keyDownEventListener = (event: KeyboardEvent) => handleKeyboardEvent(event, "down");
+    const keyUpEventListener = (event: KeyboardEvent) => handleKeyboardEvent(event, "up")
+
+    if (register) {
+      window.addEventListener('keydown', keyDownEventListener);
+      window.addEventListener('keyup', keyUpEventListener);
+    } else {
+      window.removeEventListener('keydown', keyDownEventListener);
+      window.removeEventListener('keyup', keyUpEventListener);
+    }
   }
 
   public generateMusic() {

@@ -130,7 +130,10 @@
 
     </mat-toolbar>
 
-    <div #canvas id="canvas"></div>
+    <div id="visualizer">
+      <button mat-raised-button id="toggle-piano-input-button" (click)="togglePianoInput()">{{pianoInputEnabled ? "Disable Piano Input": "Enable Piano Input"}}</button>
+      <div #canvas id="canvas"></div>
+    </div>
     <app-audio-player #audioPlayer id="audio-player" [totalTime]="musicLength" (statusChange)="handlePlayerStatusChange($event)"></app-audio-player>
   </mat-sidenav-content>
 
