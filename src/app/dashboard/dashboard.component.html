@@ -105,7 +105,7 @@
         </div>
         
         <div class="generate">
-          <button class="generate-button" mat-raised-button color="primary" (click)="generateMusic()">Generate New</button>
+          <button class="generate-button" mat-raised-button (click)="generateMusic()">Generate New</button>
           <button *ngIf="musicIsGenerated" class="modify-button" mat-raised-button color="accent" (click)="modifyMusic()">Modify</button>
           <button *ngIf="musicIsGenerated" class="view-pdf-button" mat-raised-button color="accent"
             (click)="viewPdf()">View pdf</button>
