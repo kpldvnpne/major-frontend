@@ -84,6 +84,10 @@ export class DashboardComponent implements OnInit {
   /* For visualizer */
   // state of visualizer
   public pianoInputEnabled: boolean = false;
+  public keyIsPressed: any = {};
+  public octaveKeyUpEventListener: EventListener;
+  public noteKeyDownEventListener: EventListener;
+  public noteKeyUpEventListener: EventListener;
   
   public parseChannelsInstruments(): any{
     let list:any = [];
@@ -175,50 +179,51 @@ export class DashboardComponent implements OnInit {
   }
 
   public registerForOctaveChangeEvents(register: boolean) {
-    const keyUpEventListener = (event: KeyboardEvent) => {
-      const keyCode = event.keyCode;
-      const SHIFT_KEY = 16;
-      const CTRL_KEY = 17;
-      if (keyCode === SHIFT_KEY) {
-        this.musicGenerationService.increaseOctave();
-      } else if (keyCode === CTRL_KEY) {
-        this.musicGenerationService.decreseOctave();
-      }
-    };
-    if (register)
-      window.addEventListener("keyup", keyUpEventListener);
-    else
-      window.removeEventListener("keyup", keyUpEventListener);
+    if (!this.octaveKeyUpEventListener)
+      this.octaveKeyUpEventListener = (event: KeyboardEvent) => {
+        const keyCode = event.keyCode;
+        const SHIFT_KEY = 16;
+        const CTRL_KEY = 17;
+        if (keyCode === SHIFT_KEY) {
+          this.musicGenerationService.increaseOctave();
+        } else if (keyCode === CTRL_KEY) {
+          this.musicGenerationService.decreseOctave();
+        }
+      };
+    if (register) {
+      window.addEventListener("keyup", this.octaveKeyUpEventListener);
+    } else {
+      window.removeEventListener("keyup", this.octaveKeyUpEventListener);
+    }
   }
 
   public registerForPianoKeyPresses(register: boolean) {
-    const keyIsPressed = {};
     const handleKeyboardEvent = (event: KeyboardEvent, keyStatus: "up" | "down") => {
       const note = this.musicGenerationService.keyCodeToNote(event.keyCode);
       if (note === -1)
         return;
       if (keyStatus === "down") {
-        if (!keyIsPressed[note]) {
-          keyIsPressed[note] = true;
+        if (!this.keyIsPressed[note]) {
+          this.keyIsPressed[note] = true;
           this.musicGenerationService.playNoteOn(note);
           this.app.pressKey(note);
         }
       } else if (keyStatus === "up") {
-        keyIsPressed[note] = false;
+        this.keyIsPressed[note] = false;
         this.musicGenerationService.playNoteOff(note);
         this.app.releaseKey(note);
       }
     };
 
-    const keyDownEventListener = (event: KeyboardEvent) => handleKeyboardEvent(event, "down");
-    const keyUpEventListener = (event: KeyboardEvent) => handleKeyboardEvent(event, "up")
+    this.noteKeyDownEventListener = this.noteKeyDownEventListener ? this.noteKeyDownEventListener : (event: KeyboardEvent) => handleKeyboardEvent(event, "down");
+    this.noteKeyUpEventListener = this.noteKeyUpEventListener ? this.noteKeyUpEventListener : (event: KeyboardEvent) => handleKeyboardEvent(event, "up")
 
     if (register) {
-      window.addEventListener('keydown', keyDownEventListener);
-      window.addEventListener('keyup', keyUpEventListener);
+      window.addEventListener('keydown', this.noteKeyDownEventListener);
+      window.addEventListener('keyup', this.noteKeyUpEventListener);
     } else {
-      window.removeEventListener('keydown', keyDownEventListener);
-      window.removeEventListener('keyup', keyUpEventListener);
+      window.removeEventListener('keydown', this.noteKeyDownEventListener);
+      window.removeEventListener('keyup', this.noteKeyUpEventListener);
     }
   }
 
