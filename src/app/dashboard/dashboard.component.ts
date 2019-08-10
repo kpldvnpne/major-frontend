@@ -83,6 +83,7 @@ export class DashboardComponent implements OnInit {
   public controlPanelLoading: number = 0;
   // download music link
   public DOWNLOAD_MUSIC_URL = Location.joinWithSlash(AI_API_URL, "/api/v1/music_mp3");
+  public VIEW_PDF_URL = Location.joinWithSlash(AI_API_URL, "/api/v1/sheet_music/pdf");
 
   /* For visualizer */
   // state of visualizer

@@ -107,8 +107,7 @@
         <div class="generate">
           <button class="generate-button" mat-raised-button (click)="generateMusic()">Generate New</button>
           <button *ngIf="musicIsGenerated" class="modify-button" mat-raised-button color="accent" (click)="modifyMusic()">Modify</button>
-          <button *ngIf="musicIsGenerated" class="view-music-sheet-button" mat-raised-button color="accent"
-            (click)="viewMusicSheet()">View Music Sheet</button>
+          <a *ngIf="musicIsGenerated" href="{{VIEW_PDF_URL}}" target="_blank" class="view-music-sheet-button" mat-raised-button color="accent">View Music Sheet</a>
           <a *ngIf="musicIsGenerated" [disabled]="shouldDisableDownloadAsMp3Button()" href="{{DOWNLOAD_MUSIC_URL}}" class="download-music-button" mat-raised-button color="accent">Download as MP3</a>
         </div>
       </fieldset>
