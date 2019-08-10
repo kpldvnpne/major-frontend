@@ -301,7 +301,7 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-  public viewPdf() {
+  public viewMusicSheet() {
     const pdfUrl = Location.joinWithSlash(AI_API_URL, "/api/v1/sheet_music/pdf");
     const dialogRef = this.dialog.open(PdfViewerComponent, {
       width: '90%',
