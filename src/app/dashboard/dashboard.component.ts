@@ -1,16 +1,16 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { API_BASE_URL, AI_API_URL } from '../constants';
 import { AppService } from '../app.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { MatSidenav, MatDialog } from '@angular/material';
+import { MatSidenav, MatDialog, MatSnackBar } from '@angular/material';
 import { PlayerStatus } from '../player-status';
 import { AudioPlayerComponent } from '../audio-player/audio-player.component';
 import { APIService } from '../api.service';
 import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 import { MusicGenerationService } from '../music-generation.service';
 
 export const MILLISECONDS_IN_SECOND = 1000;
@@ -25,6 +25,9 @@ export class DashboardComponent implements OnInit {
   @ViewChild('canvas') canvasRef: ElementRef;
   @ViewChild('sidenav') sidenav: MatSidenav;
   @ViewChild(AudioPlayerComponent) audioPlayer: AudioPlayerComponent;
+
+  /* ----------- Constants -------- */
+  private SNACK_BAR_DURATION = 5 * 1000;
 
   public opened = true;
   public musicLength: number = 0;
@@ -111,7 +114,8 @@ export class DashboardComponent implements OnInit {
     private musicGenerationService: MusicGenerationService,
     private http: HttpClient, 
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -140,9 +144,15 @@ export class DashboardComponent implements OnInit {
       .pipe(
         tap(() => this.controlPanelLoading++)
       )
-      .subscribe((midiFiles: string[]) => {
-        this.musicFiles = midiFiles;
-      });
+      .subscribe(
+        (midiFiles: string[]) => {
+          this.musicFiles = midiFiles;
+        },
+        error => {
+          this.controlPanelLoading++;
+          this.snackBar.open("Could not load song list from Spring Boot backend", "Dismiss", { duration:  this.SNACK_BAR_DURATION});
+        }
+      );
   }
 
   public loadGenerationPanelInfo() {
@@ -151,11 +161,17 @@ export class DashboardComponent implements OnInit {
       .pipe(
         tap(() => this.controlPanelLoading++)
       )
-      .subscribe(({ genre, instruments, keys }: any) => {
-        this.genreList = genre;
-        this.instrumentList = instruments;
-        this.keyList = keys;
-      });
+      .subscribe(
+        ({ genre, instruments, keys }: any) => {
+          this.genreList = genre;
+          this.instrumentList = instruments;
+          this.keyList = keys;
+        },
+        error => {
+          this.controlPanelLoading++;
+          this.snackBar.open("Could not load control panel options from Flask AI Server", "Dismiss", { duration: this.SNACK_BAR_DURATION });
+        }
+      );
   }
 
   public togglePianoInput() {
@@ -248,11 +264,17 @@ export class DashboardComponent implements OnInit {
         tap(() => this.musicIsGenerated = true),
         tap(() => this.controlPanelLoading++)
       )
-      .subscribe((response: any) => {
-        const midiPath = response.link;
-        const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
-        this.changeMidiTrack(midiUrl);
-      });
+      .subscribe(
+        (response: any) => {
+          const midiPath = response.link;
+          const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
+          this.changeMidiTrack(midiUrl);
+        },
+        error => {
+          this.controlPanelLoading++;
+          this.snackBar.open("Some error occurred. Could not generate music", "Dismiss", { duration: this.SNACK_BAR_DURATION });
+        }
+      );
   }
 
   public modifyMusic() {
@@ -266,11 +288,17 @@ export class DashboardComponent implements OnInit {
       .pipe(
         tap(() => this.controlPanelLoading++)
       )
-      .subscribe((response: any) => {
-        const midiPath = response.link;
-        const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
-        this.changeMidiTrack(midiUrl);
-      });
+      .subscribe(
+        (response: any) => {
+          const midiPath = response.link;
+          const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
+          this.changeMidiTrack(midiUrl);
+        },
+        error => {
+          this.controlPanelLoading++;
+          this.snackBar.open("Some error occurred. Could not modify music", "Dismiss", { duration: this.SNACK_BAR_DURATION });
+        }
+      );
   }
 
   public viewPdf() {
