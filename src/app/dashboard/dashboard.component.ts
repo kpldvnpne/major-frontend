@@ -177,9 +177,21 @@ export class DashboardComponent implements OnInit {
 
   public uploadMidiFile(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const url = Location.joinWithSlash(API_BASE_URL, "/api/upload-midi");
     if (files && files[0]) {
-      this.appService.uploadMidiFile(files[0]);
+      this.appService.uploadMidiFile(files[0])
+        .subscribe(
+          (response: any) => {
+            if (response.filename) {
+              const filename = response.filename;
+              this.snackBar.open("File uploaded successfully", "Dismiss", { duration: this.SNACK_BAR_DURATION });
+              this.loadCurrentlyPlayingPanelInfo();
+              this.changeMidiFile(filename);
+            }
+            if (response.error) {
+              this.snackBar.open(response.error, "Dismiss", { duration: this.SNACK_BAR_DURATION });
+            }
+          }
+        );
     }
   }
 
