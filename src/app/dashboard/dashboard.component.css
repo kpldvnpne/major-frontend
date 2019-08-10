@@ -58,6 +58,12 @@ mat-sidenav {
   align-items: center;
 }
 
+.midi-file-input-container {
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+}
+
 .instruments-used {
   display: flex;
   flex-direction: column;
