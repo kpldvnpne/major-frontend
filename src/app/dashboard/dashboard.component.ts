@@ -314,6 +314,15 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  public shouldDisableDownloadAsMp3Button() {
+    const disabledInstrumentIdList: Array<number> = [6, 8, 10, 11, 13, 25, 26, 27];
+    const predicate = (instrumentId: number) => instrumentId === this.instrumentSelected;
+    if (disabledInstrumentIdList.findIndex(predicate) === -1) {
+      return false;
+    }
+    return true;
+  }
+
   public logoutClick() {
     this.authService.logout();
     this.router.navigateByUrl('/login');

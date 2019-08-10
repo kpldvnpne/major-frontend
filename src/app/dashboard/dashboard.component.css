@@ -161,7 +161,7 @@ mat-sidenav-content {
   width: 100%;
   flex: auto;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 #toggle-piano-input-button {
