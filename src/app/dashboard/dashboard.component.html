@@ -108,7 +108,7 @@
           <button class="generate-button" mat-raised-button (click)="generateMusic()">Generate New</button>
           <button *ngIf="musicIsGenerated" class="modify-button" mat-raised-button color="accent" (click)="modifyMusic()">Modify</button>
           <button *ngIf="musicIsGenerated" class="view-pdf-button" mat-raised-button color="accent"
-            (click)="viewPdf()">View pdf</button>
+            (click)="viewPdf()">Music Sheet</button>
           <a *ngIf="musicIsGenerated" href="{{DOWNLOAD_MUSIC_URL}}" class="download-music-button" mat-raised-button color="accent">Download</a>
         </div>
       </fieldset>

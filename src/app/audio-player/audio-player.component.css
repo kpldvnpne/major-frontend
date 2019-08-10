@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   color: #7289DA;
+  display: flex;
 }
 
 #playing-time, #remaining-time {

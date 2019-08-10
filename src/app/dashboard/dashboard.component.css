@@ -193,7 +193,11 @@ mat-sidenav-content {
   height: 70px;
   position: relative;
   bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 
 /*
 mat-label{
@@ -209,3 +213,8 @@ mat-option{
 mat-select{
   color:#ffffff !important;
 } */
+
+.color_style{
+  background-color: #7289DA;
+  color: white;
+}
