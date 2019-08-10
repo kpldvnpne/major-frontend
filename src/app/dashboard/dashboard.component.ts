@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit {
   public octaveType: "lower" | "higher" = "lower";
   // state of control panel
   public musicIsGenerated = false;
-  public loading: boolean = false;
+  public controlPanelLoading: number = 0;
   // download music link
   public DOWNLOAD_MUSIC_URL = Location.joinWithSlash(AI_API_URL, "/api/v1/music_mp3");
   
@@ -104,12 +104,7 @@ export class DashboardComponent implements OnInit {
     private http: HttpClient, 
     private router: Router,
     private dialog: MatDialog
-  ) {
-    this.appService.getMidiFiles()
-      .subscribe((midiFiles: string[]) => {
-        this.musicFiles = midiFiles;
-      });
-  }
+  ) { }
 
   ngOnInit() {
     if(!this.authService.isLoggedIn) {
@@ -128,7 +123,27 @@ export class DashboardComponent implements OnInit {
   }
 
   public loadControlPanelInfo() {
+    this.loadCurrentlyPlayingPanelInfo();
+    this.loadGenerationPanelInfo();
+  }
+
+  public loadCurrentlyPlayingPanelInfo() {
+    // this.controlPanelLoading--;
+    this.appService.getMidiFiles()
+      .pipe(
+        // tap(() => this.controlPanelLoading++)
+      )
+      .subscribe((midiFiles: string[]) => {
+        this.musicFiles = midiFiles;
+      });
+  }
+
+  public loadGenerationPanelInfo() {
+    this.controlPanelLoading--;
     this.apiService.getAllInformation()
+      .pipe(
+        tap(() => this.controlPanelLoading++)
+      )
       .subscribe(({ genre, instruments, keys }: any) => {
         this.genreList = genre;
         this.instrumentList = instruments;
@@ -193,11 +208,11 @@ export class DashboardComponent implements OnInit {
       "octave_type": this.octaveType,
       "which_octave": this.whichOctave,
     };
-    this.loading = true;
+    this.controlPanelLoading--;
     this.apiService.generateMusic(generateOptions)
       .pipe(
         tap(() => this.musicIsGenerated = true),
-        tap(() => this.loading = false)
+        tap(() => this.controlPanelLoading++)
       )
       .subscribe((response: any) => {
         const midiPath = response.link;
@@ -212,10 +227,10 @@ export class DashboardComponent implements OnInit {
       "octave_type": this.octaveType,
       "whichOctave": this.whichOctave,
     };
-    this.loading = true;
+    this.controlPanelLoading--;
     this.apiService.modifyMusic(modifyOptions)
       .pipe(
-        tap(() => this.loading = false)
+        tap(() => this.controlPanelLoading++)
       )
       .subscribe((response: any) => {
         const midiPath = response.link;
@@ -258,12 +273,12 @@ export class DashboardComponent implements OnInit {
     const nextInstrument = event.value;
     const nextChannel = this.instruments[event.value];
 
-    this.loading = true;
+    this.controlPanelLoading--;
     this.MIDI.loadPlugin({
       soundfontUrl: "./soundfont/",
       instruments: [ nextInstrument ],
       onsuccess: () => {
-        this.loading = false;
+        this.controlPanelLoading++;
         this.MIDI.programChange(prevChannel, nextChannel);
         if (wasPlaying)
           this.audioPlayer.resume();
