@@ -135,10 +135,10 @@ export class DashboardComponent implements OnInit {
   }
 
   public loadCurrentlyPlayingPanelInfo() {
-    // this.controlPanelLoading--;
+    this.controlPanelLoading--;
     this.appService.getMidiFiles()
       .pipe(
-        // tap(() => this.controlPanelLoading++)
+        tap(() => this.controlPanelLoading++)
       )
       .subscribe((midiFiles: string[]) => {
         this.musicFiles = midiFiles;
