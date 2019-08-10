@@ -3,6 +3,8 @@
   height: 50px;
   display: flex;
   align-items: center;
+  /* color: #7289DA; */
+  display: flex;
 }
 
 #playing-time, #remaining-time {
@@ -52,21 +54,21 @@
 
 #slider-active {
   z-index: 10;
-  background-color: blueviolet;
+  background-color: #7289DA;
 }
 
 #cursor {
   z-index: 20;
   position: absolute;
   border-radius: 50%;
-  background: purple;
+  background: #7289DA;
   opacity: 0;
   width: 20px;
   height: 20px;
   top: 50%;
   left: 0;
   transform: translate(-50%, -50%);
-  transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.01s ease-in-out;
   cursor: pointer;
 }
 
