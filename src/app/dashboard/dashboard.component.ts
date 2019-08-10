@@ -267,6 +267,7 @@ export class DashboardComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
+          this.reloadPdfUrl();
           const midiPath = response.link;
           const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
           this.changeMidiTrack(midiUrl);
@@ -291,6 +292,7 @@ export class DashboardComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
+          this.reloadPdfUrl();
           const midiPath = response.link;
           const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
           this.changeMidiTrack(midiUrl);
@@ -302,6 +304,11 @@ export class DashboardComponent implements OnInit {
       );
   }
 
+  private reloadPdfUrl() {
+    this.VIEW_PDF_URL = Location.joinWithSlash(AI_API_URL, `/api/v1/sheet_music/pdf?random=${Math.random()}`)
+  }
+
+  // ------------------ This is not needed, not until we solve problem with displaying pdf ----------------
   public viewMusicSheet() {
     const pdfUrl = Location.joinWithSlash(AI_API_URL, "/api/v1/sheet_music/pdf");
     const dialogRef = this.dialog.open(PdfViewerComponent, {
