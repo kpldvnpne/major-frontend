@@ -175,6 +175,14 @@ export class DashboardComponent implements OnInit {
       );
   }
 
+  public uploadMidiFile(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    const url = Location.joinWithSlash(API_BASE_URL, "/api/upload-midi");
+    if (files && files[0]) {
+      this.appService.uploadMidiFile(files[0]);
+    }
+  }
+
   public togglePianoInput() {
     if (this.pianoInputEnabled) {
       this.unregisterKeyboardEventsForPianoInputs();
