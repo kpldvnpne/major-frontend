@@ -245,7 +245,8 @@ export class DashboardComponent implements OnInit {
   }
 
   public soundFontChange(event: any, channel: number) {
-    this.app.stop();
+    const wasPlaying = this.audioPlayer.isPlaying;
+    this.audioPlayer.pause();
     const prevChannel = channel;
     const nextInstrument = event.value;
     const nextChannel = this.instruments[event.value];
@@ -255,7 +256,8 @@ export class DashboardComponent implements OnInit {
       instruments: [ nextInstrument ],
       onsuccess: () => {
         this.MIDI.programChange(prevChannel, nextChannel);
-        this.app.start();
+        if (wasPlaying)
+          this.audioPlayer.resume();
       }
     })
   }
