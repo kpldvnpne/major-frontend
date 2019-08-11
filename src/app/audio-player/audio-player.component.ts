@@ -56,6 +56,9 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   public resume(): void {
+    if (this._timePosition >= this.totalTime) {
+      this._timePosition = 0;
+    }
     this.isPlaying = true;
     this.timer = setInterval(() => {
       if (this._timePosition < this.totalTime) {
