@@ -287,9 +287,9 @@ export class DashboardComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          this.reloadPdfUrl();
+          this.reloadPdfAndDownloadUrl();
           const midiPath = response.link;
-          const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
+          const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/api/v1/file/", midiPath));
           this.changeMidiTrack(midiUrl);
         },
         error => {
@@ -312,9 +312,9 @@ export class DashboardComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          this.reloadPdfUrl();
+          this.reloadPdfAndDownloadUrl();
           const midiPath = response.link;
-          const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/static/", midiPath));
+          const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/api/v1/file/", midiPath));
           this.changeMidiTrack(midiUrl);
         },
         error => {
@@ -324,8 +324,9 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-  private reloadPdfUrl() {
+  private reloadPdfAndDownloadUrl() {
     this.VIEW_PDF_URL = Location.joinWithSlash(AI_API_URL, `/api/v1/sheet_music/pdf?random=${Math.random()}`)
+    this.DOWNLOAD_MUSIC_URL = Location.joinWithSlash(AI_API_URL, `/api/v1/music_mp3?random=${Math.random()}`)
   }
 
   // ------------------ This is not needed, not until we solve problem with displaying pdf ----------------
