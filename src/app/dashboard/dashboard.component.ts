@@ -290,7 +290,7 @@ export class DashboardComponent implements OnInit {
           this.reloadPdfAndDownloadUrl();
           const midiPath = response.link;
           const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/api/v1/file/", midiPath));
-          this.changeMidiTrack(midiUrl);
+          this.changeMidiTrack(`${midiUrl}?random=${Math.random()}`);
         },
         error => {
           this.controlPanelLoading++;
@@ -315,7 +315,7 @@ export class DashboardComponent implements OnInit {
           this.reloadPdfAndDownloadUrl();
           const midiPath = response.link;
           const midiUrl = Location.joinWithSlash(AI_API_URL, Location.joinWithSlash("/api/v1/file/", midiPath));
-          this.changeMidiTrack(midiUrl);
+          this.changeMidiTrack(`${midiUrl}?random=${Math.random()}`);
         },
         error => {
           this.controlPanelLoading++;
